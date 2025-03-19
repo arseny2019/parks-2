@@ -1,0 +1,24 @@
+.news-content img {
+    aspect-ratio: 1.65;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.news-content * + p {
+    margin-top: 16px;
+}
+.news-content img {
+    margin: 32px 0;
+}
+
+.news-content h6 {
+    @apply mt-[10px] text-[14px] leading-[21px] font-[500] font-roboto text-placeholder-black;
+}
+
+.news-content p, .news-content span {
+    @apply font-inter font-[400] text-[17px] leading-[26px] md:text-[18px] md:leading-[27px];
+}
+
+.news-content a {
+    @apply text-main-blue duration-200 hover:text-secondary-green;
+}
