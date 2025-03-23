@@ -10,6 +10,7 @@ import Footer from "@/components/footer";
 import MainMapBlock from "@/components/main-page/mainMapBlock";
 import Link from "next/link";
 import {notFound} from "next/navigation";
+import MainSecondBlock from "@/components/main-page/mainSecondBlock";
 
 async function getDirections() {
     return directus.request(readItems('directions'));
@@ -53,6 +54,7 @@ export default async function Home() {
     const data = await getMainPageData();
     const news = await getNews();
     const menu = await getInformationMenu();
+    console.log('data', data);
     return (
         <>
             <Header contacts={contacts} directions={directions} withAnimation={true} menu={menu}></Header>
@@ -61,16 +63,15 @@ export default async function Home() {
                     topBlockImage={data.topBlockImage}
                     topBlockText={data.topBlockText}
                     topBlockVideo={data.topBlockVideo}
-                    topBlockVideoPreview={data.topBlockVideoPreview}
+                    topBlockVideoMP4={data.topBlockVideoMP4}
                 ></MainTopBlock>
             </div>
             <div className="xl:min-h-[900px] md:h-[100vh]"></div>
             <div id="offsetBlock"></div>
             <div className="bg-white pb-[100px] md:pb-[120px] xl:pb-[200px]">
-                <MainDirectionsBlock
-                    directionsBlockText={data.directionsBlockText}
-                    directions={directions}
-                ></MainDirectionsBlock>
+                <div className="c-container">
+                    <MainSecondBlock data={data}/>
+                </div>
                 <div className="c-container mt-[100px] md:mt-[120px] xl:mt-[150px] ">
                             <h3 className="mb-6 uppercase
                     text-[32px] leading-[42px]

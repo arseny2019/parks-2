@@ -17,6 +17,21 @@
     background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.4));
 }
 
+.regions-gradient {
+    background: linear-gradient(359.85deg, rgba(245, 245, 245, 0.8) 0.13%, rgba(245, 245, 245, 0.5) 99.87%);
+}
+
+.regions-background-map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-position: center;
+    background-size: 90%;
+    background-repeat: no-repeat;
+}
+
 .project-card:hover .projects-gradient {
     opacity: 1;
 }

@@ -91,8 +91,8 @@ const BlackHeader = ({directions, contacts, menu}) => {
                     pl-6 pt-8 pr-4 pb-4
                     ">
                         <Link href="/">
-                            <Image width={142} height={46} src="/logo-black.svg"
-                                   className="h-[44px] w-[138px] md:h-[46px] md:w-[142px]" alt="Logo"></Image>
+                            <Image width={208} height={42} src="/logo-black.svg"
+                                   className="h-[42px] w-[208px]" alt="Logo"></Image>
                         </Link>
 
                         <div className="text-main-black">
