@@ -91,7 +91,7 @@ export default async function Home() {
                 <MainNewsBlock news={news}></MainNewsBlock>
             </div>
             <div id="blackWrapper">
-                <MainMapBlock mapBlockText={data.mapBlockText} mapBlockLink={data.mapBlockLink}></MainMapBlock>
+                <MainMapBlock mapBlockImage={data.mapBlockImage} mapBlockText={data.mapBlockText} mapBlockLink={data.mapBlockLink}></MainMapBlock>
                 <Footer contacts={contacts} directions={directions} menu={menu}></Footer>
             </div>
         </>

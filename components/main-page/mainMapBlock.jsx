@@ -1,21 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
+import {getImageURL} from "@/helpers/directus";
 
-const MainMapBlock = ({mapBlockText, mapBlockLink}) => {
+const MainMapBlock = ({mapBlockText, mapBlockLink, mapBlockImage}) => {
 
     return (
-        <div className="relative map-gradient border-b-[1px] border-[rgba(255,_255,_255,_0.06)]">
+        <div className="relative border-b-[1px] bg-black border-[rgba(255,_255,_255,_0.06)]">
             <div className="c-container flex items-center justify-center map-background text-white
-                h-[640px]
+                h-[580px] py-[120px]
                 sm:h-[700px]
-                md:h-[580px]
-                lg:h-[660px]
-                xl:h-[860px]
-                ">
+                md:h-[860px] md:py-[190px]
+                "
+                 style={{backgroundImage: 'url(' + getImageURL(mapBlockImage) + ')'}}
+            >
                 <div className="absolute left-0 top-0 w-full h-full upper-gradient"></div>
-                <div className="z-[5] flex flex-col items-center max-w-[700px]">
-                    <Image quality={100} className="lg:w-[320px] lg:h-[65px]" width={246} height={50}
-                           src="/logo-blue.svg"
+                <div className="h-full z-[5] flex flex-col items-center justify-between max-w-[700px]">
+                    <Image quality={100} width={220} height={65}
+                           src="/logo-green.svg"
                            alt="Общероссийская общественная организация Парки России"></Image>
                     <div className="flex flex-col items-center mt-20">
                         <p className="text-[16px] leading-6 font-inter text-center
