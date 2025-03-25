@@ -71,9 +71,15 @@ export default function MainSecondBlock({data}) {
                             <p className="font-roboto-condensed uppercase
                     text-[20px] leading-[26px]">{data.secondBlockAwardsText}</p>
                         </div>
-                        {data.secondBlockAwardsImage &&
+                        {data.secondBlockAwardsImage && !(data.secondBlockAwardsVideo || data.secondBlockAwardsVideoMP4) &&
                             <div className="absolute top-0 left-0 w-full h-full bg-cover"
                                  style={{backgroundImage: 'url(' + getImageURL(data.secondBlockAwardsImage) + ')'}}/>}
+                        {(data.secondBlockAwardsVideo || data.secondBlockAwardsVideoMP4) && <video loop={true} muted={true} width={1360} height={0}
+                                                                                                   className="absolute top-0 left-0 w-full h-full object-cover" playsInline={true} autoPlay={true}
+                                                                                                   poster={getImageURL(data.secondBlockAwardsImage)}>
+                            {data.secondBlockAwardsVideo && <source src={getImageURL(data.secondBlockAwardsVideo)}/>}
+                            {data.secondBlockAwardsVideoMP4 && <source src={getImageURL(data.secondBlockAwardsVideoMP4)}/>}
+                        </video>}
                     </div>}
                 </div>
             </div>
