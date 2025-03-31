@@ -6,7 +6,7 @@ const MainMapBlock = ({mapBlockText, mapBlockLink, mapBlockImage}) => {
 
     return (
         <div className="relative border-b-[1px] bg-black border-[rgba(255,_255,_255,_0.06)]">
-            <div className="c-container flex items-center justify-center map-background text-white
+            <div className="flex items-center justify-center map-background text-white
                 h-[580px] py-[120px]
                 sm:h-[700px]
                 md:h-[860px] md:py-[190px]

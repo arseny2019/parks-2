@@ -57,3 +57,50 @@ body.menu-open {
     height: 1px;
     @apply bg-[rgba(10,_10,_10,_0.06)];
 }
+
+@layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+}
+
+.svg-map {
+    color: #f5f5f5;
+
+    @apply w-full;
+}
+
+.svg-map path.active {
+    fill: rgba(61, 61, 61, 1);
+    color: rgba(61, 61, 61, 1);
+    transition: 200ms;
+
+    @apply md:cursor-pointer;
+}
+
+path.active:hover {
+    fill: rgba(10, 10, 10, 1);
+    color: rgba(10, 10, 10, 1);
+}
+
+.tooltip {
+    box-shadow: 20px 20px 40px 0 rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(30px);
+    position: absolute;
+    z-index: 10;
+    padding: 16px;
+    border-radius: 12px;
+    /*opacity: 0;*/
+}
+
+.content-roboto-condensed * {
+    @apply font-roboto-condensed;
+}

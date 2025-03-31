@@ -38,6 +38,7 @@ export default {
                 'placeholder-black': 'rgba(10, 10, 10, 0.4)',
                 'input-bg': 'rgba(10, 10, 10, 0.04)',
                 'input-bg-focus': 'rgba(10, 10, 10, 0.06)',
+                'input-bg-hover': 'rgba(10, 10, 10, 0.08)',
                 'input-bg-focus-border': 'rgba(10, 10, 10, 0.12)',
                 'main-gray': 'rgba(10, 10, 10, 0.08)',
                 'secondary-gray': 'rgba(10, 10, 10, 0.15)',
