@@ -78,16 +78,16 @@ body.menu-open {
 }
 
 .svg-map path.active {
-    fill: rgba(61, 61, 61, 1);
-    color: rgba(61, 61, 61, 1);
+    fill: #0094CC;
+    color: #0094CC;
     transition: 200ms;
 
     @apply md:cursor-pointer;
 }
 
 path.active:hover {
-    fill: rgba(10, 10, 10, 1);
-    color: rgba(10, 10, 10, 1);
+    fill: rgba(0, 120, 165, 1);
+    color: rgba(0, 120, 165, 1);
 }
 
 .tooltip {

@@ -19,7 +19,6 @@ export default function InteractiveMap({regions}) {
             return;
         }
         const gArray = [...svgRef.current.querySelectorAll('g, path')].filter(item => item.getAttribute('id'));
-        console.log('g', gArray);
         const updatedAvailableRegions = [];
         gArray.forEach(g => {
             const pathId = g.getAttribute('id');
@@ -38,7 +37,6 @@ export default function InteractiveMap({regions}) {
         });
 
         setAvailableRegions(updatedAvailableRegions);
-        console.log('updated', updatedAvailableRegions);
     }, [regions]);
 
     useEffect(() => {
@@ -50,11 +48,14 @@ export default function InteractiveMap({regions}) {
                 }
                 const width = tooltipRef.current.clientWidth;
                 const offsetX = e.pageX + width >= scrollContainer.clientWidth ? e.pageX - width - 30 : e.pageX;
-                console.log('scrollcontainer', scrollContainer.scrollLeft, scrollContainer.scrollWidth, scrollContainer.clientWidth, e.pageX);
                 setTooltipPosition({x: offsetX, y: e.pageY});
             });
         }
         document.addEventListener('mousemove', updateTooltipPosition);
+
+        document.querySelector('.map-scroll-container').addEventListener('scroll', () => {
+            setActiveRegion(null);
+        });
 
         return () => {
             document.removeEventListener('mousemove', updateTooltipPosition);
