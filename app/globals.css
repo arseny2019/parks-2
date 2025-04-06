@@ -104,3 +104,8 @@ path.active:hover {
 .content-roboto-condensed * {
     @apply font-roboto-condensed;
 }
+
+blockquote {
+    padding-left: 20px;
+    border-left: 5px solid rgba(0, 148, 204, 1);
+}
