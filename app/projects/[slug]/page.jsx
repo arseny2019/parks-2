@@ -36,9 +36,28 @@ export async function generateMetadata({params, searchParams}, parent) {
         fields: ['*']
     })).catch(() => notFound());
 
+    const {ogImage, siteName} = await directus.request(readItems('mainPage')).catch(() => notFound());
+    const imageUrl = getImageURL(ogImage);
+
     return {
         title: item.title,
-        description: item.metaDescription || item.title,
+        description: item.metaDescription,
+        robots: 'index, follow',
+        keywords: item.keywords || '',
+        openGraph: {
+            title: item.title,
+            description: item.metaDescription,
+            siteName,
+            images: [
+                {
+                    url: imageUrl,
+                    secureUrl: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: siteName,
+                },
+            ]
+        }
     }
 }
 

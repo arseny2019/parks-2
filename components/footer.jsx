@@ -40,7 +40,7 @@ const Footer = ({directions, contacts, menu}) => {
             </div>}
             <div className="c-container">
                 <Link className="inline-block xl:hidden" href="/">
-                    <Image quality={100} className="w-[208px] h-[42px]" width={208} height={42}
+                    <Image quality={100} className="logo-image w-[208px] h-[42px]" width={208} height={42}
                            src="/logo.svg" alt="Парки России"></Image>
                 </Link>
                 <div className="lg:hidden mt-[100px] flex flex-col">
@@ -118,7 +118,7 @@ const Footer = ({directions, contacts, menu}) => {
                 ">
                     <div className="grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-8 xl:grid-cols-4">
                         <Link className="hidden xl:inline-block" href="/">
-                            <Image quality={100} className="w-[208px] h-[42px]"
+                            <Image quality={100} className="logo-image w-[208px] h-[42px]"
                                    width={208} height={42} src="/logo.svg" alt="Парки России"></Image>
                         </Link>
                         <div className="pr-5">

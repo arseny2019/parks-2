@@ -132,7 +132,7 @@ const Header = ({withAnimation, directions, contacts, menu}) => {
                 </div>
             </header>
             <header ref={secondHeader}
-                    className="backdrop-blur-[50px] bg-[rgba(255,_255,_255,_0.6)] duration-300 w-full fixed top-0 left-0 z-10 h-[88px] xl:h-[90px]">
+                    className="opacity-0 invisible backdrop-blur-[50px] bg-[rgba(255,_255,_255,_0.6)] duration-300 w-full fixed top-0 left-0 z-10 h-[88px] xl:h-[90px]">
                 <div className="absolute left-0 top-0 w-full">
                     <div ref={headerInnerRef} className="mx-auto flex justify-between items-center duration-200
                     2xl:max-w-[1680px] 3xl:pl-[120px] 3xl:pr-[120px]

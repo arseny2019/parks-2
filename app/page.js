@@ -11,6 +11,7 @@ import MainMapBlock from "@/components/main-page/mainMapBlock";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import MainSecondBlock from "@/components/main-page/mainSecondBlock";
+import {getImageURL} from "@/helpers/directus";
 
 async function getDirections() {
     return directus.request(readItems('directions'));
@@ -38,12 +39,31 @@ async function getContacts() {
 
 export async function generateMetadata() {
 
-    const detail = await directus.request(readItems('mainPage')).catch(() => notFound());
-    console.log('detail', detail);
+    const item = await directus.request(readItems('mainPage')).catch(() => notFound());
+    console.log('detail', item);
+
+    const {ogImage, siteName} = await directus.request(readItems('mainPage')).catch(() => notFound());
+    const imageUrl = getImageURL(ogImage);
 
     return {
-        title: detail.metaTitle,
-        description: detail.metaDescription,
+        title: item.metaTitle,
+        description: item.metaDescription,
+        robots: 'index, follow',
+        keywords: item.keywords || '',
+        openGraph: {
+            title: item.metaTitle,
+            description: item.metaDescription,
+            siteName,
+            images: [
+                {
+                    url: imageUrl,
+                    secureUrl: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: siteName,
+                },
+            ]
+        }
     }
 }
 

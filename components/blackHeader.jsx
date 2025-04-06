@@ -14,6 +14,18 @@ const BlackHeader = ({directions, contacts, menu}) => {
     const [heightOnHide, setHeightOnHide] = useState(0);
     const [activeMenu, setActiveMenu] = useState(false);
 
+    if (typeof window !== 'undefined') {
+        useEffect(() => {
+            document.querySelectorAll('.logo-image').forEach(el => {
+                if (window.location.pathname === '/') {
+                    el.classList.remove('hover:opacity-70', 'duration-200');
+                } else {
+                    el.classList.add('hover:opacity-70', 'duration-200');
+                }
+            });
+        }, [window.location.pathname]);
+    }
+
     useEffect(() => {
         setHeaderHeight(headerRef.current.getBoundingClientRect().height);
 
@@ -85,14 +97,14 @@ const BlackHeader = ({directions, contacts, menu}) => {
                             directions={directions} contacts={contacts}></Navigation>
                 <div className="absolute left-0 top-0 w-full">
                     <div ref={headerInnerRef} className="mx-auto flex justify-between items-center duration-200
-                    2xl:max-w-[1680px] 2xl:pl-[120px] 2xl:pr-[120px]
+                    2xl:max-w-[1680px] 3xl:pl-[120px] 3xl:pr-[120px]
                     lg:pr-10 lg:pl-10
                     md:pr-6
                     pl-6 pt-8 pr-4 pb-4
                     ">
                         <Link href="/">
                             <Image width={208} height={42} src="/logo-black.svg"
-                                   className="h-[42px] w-[208px]" alt="Logo"></Image>
+                                   className="logo-image h-[42px] w-[208px]" alt="Logo"></Image>
                         </Link>
 
                         <div className="text-main-black">

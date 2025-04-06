@@ -50,10 +50,10 @@ body.menu-open {
 
 .screen-width-line::after {
     content: '';
-    width: 100vw;
+    width: calc(100vw - var(--scrollbar-width));
     position: absolute;
     bottom: 0;
-    left: calc(50% - 50vw);
+    left: calc(50% - 50vw + var(--scrollbar-width) / 2);
     height: 1px;
     @apply bg-[rgba(10,_10,_10,_0.06)];
 }

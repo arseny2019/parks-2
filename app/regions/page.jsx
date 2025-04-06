@@ -4,6 +4,7 @@ import BlackHeader from "@/components/blackHeader";
 import Footer from "@/components/footer";
 import {notFound} from "next/navigation";
 import RegionsComponent from "@/components/regions/regionsComponent";
+import {getImageURL} from "@/helpers/directus";
 
 async function getDirections() {
     return directus.request(readItems('directions'));
@@ -40,9 +41,28 @@ export async function generateMetadata() {
 
     const item = await directus.request(readItems('regionArchivePage')).catch(() => notFound());
 
+    const {ogImage, siteName} = await directus.request(readItems('mainPage')).catch(() => notFound());
+    const imageUrl = getImageURL(ogImage);
+
     return {
         title: item.metaTitle,
-        description: item.metaDescription || item.metaTitle,
+        description: item.metaDescription,
+        robots: 'index, follow',
+        keywords: item.keywords || '',
+        openGraph: {
+            title: item.metaTitle,
+            description: item.metaDescription,
+            siteName,
+            images: [
+                {
+                    url: imageUrl,
+                    secureUrl: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: siteName,
+                },
+            ]
+        }
     }
 }
 

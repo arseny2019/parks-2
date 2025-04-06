@@ -4,6 +4,7 @@ import Footer from "@/components/footer";
 import BlackHeader from "@/components/blackHeader";
 import NewsArchiveGrid from "@/components/news/newsArchiveGrid";
 import {notFound} from "next/navigation";
+import {getImageURL} from "@/helpers/directus";
 
 async function getNews(page, limit) {
     return directus.request(readItems('news', {
@@ -36,9 +37,28 @@ export async function generateMetadata() {
 
     const item = await directus.request(readItems('newsArchivePage')).catch(() => notFound());
 
+    const {ogImage, siteName} = await directus.request(readItems('mainPage')).catch(() => notFound());
+    const imageUrl = getImageURL(ogImage);
+
     return {
         title: item.metaTitle,
-        description: item.metaDescription || item.metaTitle,
+        description: item.metaDescription,
+        robots: 'index, follow',
+        keywords: item.keywords || '',
+        openGraph: {
+            title: item.metaTitle,
+            description: item.metaDescription,
+            siteName,
+            images: [
+                {
+                    url: imageUrl,
+                    secureUrl: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: siteName,
+                },
+            ]
+        }
     }
 }
 

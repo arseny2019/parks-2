@@ -2,8 +2,8 @@ import directus from "@/lib/directus";
 import {readItems} from "@directus/sdk";
 import BlackHeader from "@/components/blackHeader";
 import Footer from "@/components/footer";
-import NewsDetail from "@/components/news/newsDetail";
 import {notFound} from "next/navigation";
+import PrivacyDetail from "@/components/privacy/privacyDetail";
 import {getImageURL} from "@/helpers/directus";
 
 async function getDirections() {
@@ -14,22 +14,8 @@ async function getContacts() {
     return directus.request(readItems('contacts'));
 }
 
-async function getNewsDetail(slug) {
-    return directus.request(readItems('news', {
-        filter: {slug},
-        fields: ['*']
-    })).catch(() => notFound());
-}
-
-async function getNextNews(date) {
-    return directus.request(readItems('news', {
-        filter: {
-            date: {"_lt": date}
-        },
-        sort: ['-date'],
-        limit: 1,
-        fields: ['*']
-    })).catch(() => notFound());
+async function getPrivacyDetail() {
+    return directus.request(readItems('privacyPage')).catch(() => notFound());
 }
 
 async function getInformationMenu() {
@@ -37,12 +23,8 @@ async function getInformationMenu() {
 }
 
 export async function generateMetadata({params, searchParams}, parent) {
-    const slug = (await params).slug
 
-    const [item] = await directus.request(readItems('news', {
-        filter: {slug},
-        fields: ['*']
-    })).catch(() => notFound());
+    const item = await directus.request(readItems('privacyPage')).catch(() => notFound());
 
     const {ogImage, siteName} = await directus.request(readItems('mainPage')).catch(() => notFound());
     const imageUrl = getImageURL(ogImage);
@@ -69,15 +51,14 @@ export async function generateMetadata({params, searchParams}, parent) {
     }
 }
 
-const NewsDetailPage = async ({params}) => {
+const PrivacyPage = async ({params}) => {
     const pars = await params;
     const directions = await getDirections();
     const contacts = await getContacts();
-    const [detail] = await getNewsDetail(pars.slug);
+    const detail = await getPrivacyDetail();
     if (!detail) {
         notFound();
     }
-    const res = await getNextNews(detail.date);
     const menu = await getInformationMenu();
 
 
@@ -85,7 +66,7 @@ const NewsDetailPage = async ({params}) => {
         <>
             <BlackHeader contacts={contacts} directions={directions} menu={menu}></BlackHeader>
             <div className="c-container">
-                <NewsDetail detail={detail} previousNews={res[0] || false}/>
+                <PrivacyDetail detail={detail}/>
             </div>
             <div id="blackWrapper">
                 <Footer contacts={contacts} directions={directions} menu={menu}></Footer>
@@ -94,4 +75,4 @@ const NewsDetailPage = async ({params}) => {
     )
 }
 
-export default NewsDetailPage;
+export default PrivacyPage;
