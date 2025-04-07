@@ -74,10 +74,6 @@ export default function InteractiveMap({regions}) {
             svgRef.current.addEventListener('mouseover', handleMouseMoveOnMap);
         }
 
-        return () => {
-            svgRef.current.removeEventListener('mouseover', handleMouseMoveOnMap);
-        }
-
     }, [svgRef.current, regions]);
 
     return (
