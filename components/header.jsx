@@ -157,8 +157,8 @@ const Header = ({withAnimation, directions, contacts, menu}) => {
             </header>
             <div ref={blackCircleRef} className="fixed right-0 top-0 scale-0 z-10 origin-center
                 translate-x-[50%] translate-y-[-50%] duration-500 bg-main-black w-[max(400vh,_400vw)] h-[max(400vh,_400vw)] rounded-[50%]"></div>
-            {/*<Navigation menu={menu} closeCallback={() => setBurgerActive(false)} active={activeMenu}*/}
-            {/*            directions={directions} contacts={contacts}></Navigation>*/}
+            <Navigation menu={menu} closeCallback={() => setBurgerActive(false)} active={activeMenu}
+                        directions={directions} contacts={contacts}></Navigation>
         </>
     )
 }
