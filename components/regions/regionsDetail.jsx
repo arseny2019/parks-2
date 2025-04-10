@@ -11,7 +11,7 @@ const RegionsDetail = ({detail}) => {
         <>
             <div className="screen-width-line">
                 <div
-                    className="c-container uppercase
+                    className="uppercase
                     pt-[206px] pb-16
                     sm:pt-[246px]
                     md:pt-[259px]

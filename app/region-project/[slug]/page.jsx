@@ -5,6 +5,7 @@ import Footer from "@/components/footer";
 import NewsDetail from "@/components/news/newsDetail";
 import {notFound} from "next/navigation";
 import {getImageURL} from "@/helpers/directus";
+import RegionProjectDetail from "@/components/region-projects/regionProjectDetail";
 
 async function getDirections() {
     return directus.request(readItems('directions'));
@@ -14,21 +15,10 @@ async function getContacts() {
     return directus.request(readItems('contacts'));
 }
 
-async function getNewsDetail(slug) {
-    return directus.request(readItems('news', {
+async function getRegionProject(slug) {
+    return directus.request(readItems('regionProjects', {
         filter: {slug},
-        fields: ['*']
-    })).catch(() => notFound());
-}
-
-async function getNextNews(date) {
-    return directus.request(readItems('news', {
-        filter: {
-            date: {"_lt": date}
-        },
-        sort: ['-date'],
-        limit: 1,
-        fields: ['*']
+        fields: ['*', 'region.*']
     })).catch(() => notFound());
 }
 
@@ -39,7 +29,7 @@ async function getInformationMenu() {
 export async function generateMetadata({params, searchParams}, parent) {
     const slug = (await params).slug
 
-    const [item] = await directus.request(readItems('news', {
+    const [item] = await directus.request(readItems('regionProjects', {
         filter: {slug},
         fields: ['*']
     })).catch(() => notFound());
@@ -73,11 +63,10 @@ const NewsDetailPage = async ({params}) => {
     const pars = await params;
     const directions = await getDirections();
     const contacts = await getContacts();
-    const [detail] = await getNewsDetail(pars.slug);
+    const [detail] = await getRegionProject(pars.slug);
     if (!detail) {
         notFound();
     }
-    const res = await getNextNews(detail.date);
     const menu = await getInformationMenu();
 
 
@@ -85,7 +74,7 @@ const NewsDetailPage = async ({params}) => {
         <>
             <BlackHeader contacts={contacts} directions={directions} menu={menu}></BlackHeader>
             <div className="c-container">
-                <NewsDetail detail={detail} previousNews={res[0] || false}/>
+                <RegionProjectDetail detail={detail}/>
             </div>
             <div id="blackWrapper">
                 <Footer contacts={contacts} directions={directions} menu={menu}></Footer>
