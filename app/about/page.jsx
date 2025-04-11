@@ -16,8 +16,8 @@ async function getContacts() {
     return directus.request(readItems('contacts'));
 }
 
-async function getDevelopmentDetail() {
-    return directus.request(readItems('development', {
+async function getAboutDetail() {
+    return directus.request(readItems('about', {
         fields: ['*']
     })).catch(() => notFound());
 }
@@ -39,7 +39,7 @@ async function getInformationMenu() {
 
 export async function generateMetadata() {
 
-    const item = await directus.request(readItems('development')).catch(() => notFound());
+    const item = await directus.request(readItems('about')).catch(() => notFound());
 
     const {ogImage, siteName} = await directus.request(readItems('mainPage')).catch(() => notFound());
     const imageUrl = getImageURL(ogImage);
@@ -50,7 +50,7 @@ export async function generateMetadata() {
         robots: 'index, follow',
         keywords: item.keywords || '',
         openGraph: {
-            title: item.metaTitle,
+            title: item.title,
             description: item.metaDescription,
             siteName,
             images: [
@@ -70,7 +70,7 @@ export async function generateMetadata() {
 export default async function DevelopmentPage({params}) {
     const directions = await getDirections();
     const contacts = await getContacts();
-    const detail = await getDevelopmentDetail();
+    const detail = await getAboutDetail();
     console.log('detail', detail);
     if (!detail) {
         notFound();
@@ -102,14 +102,11 @@ export default async function DevelopmentPage({params}) {
                     xl:gap-y-[120px]
                     2xl:gap-y-[150px]
                 ">
-                    {detail.text && <p className="font-inter leading-[150%]
-                    text-[22px]
-                    md:text-[28px]
-                    lg:text-[36px] lg:font-roboto
-                    xl:text-[40px]
-                    2xl:text-[48px]
-                    ">{detail.text}</p>}
-                    {employees && <div className="grid grid-cols-1
+                    {detail.text && <div className="uppercase directions-block-title"
+                                         dangerouslySetInnerHTML={{__html: detail.text}}></div>}
+                    {employees && <div>
+                        {detail.employeesTitle && <h3 className="mb-6 md:mb-8 uppercase text-[32px] leading-[42px] md:text-[36px] md:leading-[54px]">{detail.employeesTitle}</h3>}
+                        <div className="grid grid-cols-1
                         gap-y-12
                         md:gap-y-16 md:gap-x-8 md:grid-cols-2
                         2xl:gap-x-16
@@ -123,11 +120,7 @@ export default async function DevelopmentPage({params}) {
                                 <p className="font-medium text-placeholder-black text-[14px] leading-[150%] mt-2 xl:text-[16px]">{employee.post}</p>
                             </div>
                         </div>)}
-                    </div>}
-                    <Link href="/contacts" className="block text-center w-full font-[500] bg-[rgba(10,_10,_10,_0.08)] duration-200 text-[rgba(10,_10,_10,_0.4)] hover:text-[rgba(10,_10,_10,_0.8)]
-                       py-[30px] text-[20px] leading-[150%] rounded-[45px]
-                       lg:py-[40px] lg:text-[22px] lg:rounded-[57px]
-                    ">Вступить в совет</Link>
+                    </div></div>}
                 </div>
             </div>
             <div id="blackWrapper">
