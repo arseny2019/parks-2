@@ -16,7 +16,7 @@ export default function MainSecondBlock({data}) {
                     {data.secondBlockFeatures &&
                         <div className="grid md:grid-cols-2 gap-4 md:gap-6">{data.secondBlockFeatures.map((feature) =>
                             <div
-                                className="flex flex-col justify-between p-6 md:p-8 h-[160px] md:h-[240px] border border-input-bg-focus-border rounded-3xl"
+                                className="flex flex-col justify-between p-6 md:p-8 h-[200px] md:h-[240px] lg:h-[260px] border border-input-bg-focus-border rounded-3xl"
                                 key={feature.title}>
                     <span className="uppercase font-roboto-condensed font-bold
                     text-[36px] leading-[130%]
@@ -31,7 +31,7 @@ export default function MainSecondBlock({data}) {
                             </div>)}</div>}
                     <div className="grid lg:grid-cols-2 xl:block gap-6">
                         {data.secondBlockRegionsText && <div
-                            className="overflow-hidden relative w-full h-[320px] border border-input-bg-focus-border rounded-3xl">
+                            className="overflow-hidden relative w-full h-[240px] md:h-[320px] lg:h-[500px] xl:h-[360px] border border-input-bg-focus-border rounded-3xl">
                             <div
                                 className="regions-gradient absolute left-0 top-0 z-[1] h-full w-full flex flex-col justify-between items-start p-6 md:p-8">
                                 <div className="uppercase font-roboto-condensed
@@ -53,7 +53,7 @@ export default function MainSecondBlock({data}) {
                         </div>}
 
                         {data.secondBlockAwardsTitle && <div
-                            className="text-white overflow-hidden xl:hidden relative w-full h-[320px] md:h-[420px] lg:h-full rounded-3xl">
+                            className="text-white overflow-hidden xl:hidden relative w-full h-[320px] lg:h-[500px] rounded-3xl">
                             <div
                                 className="bg-placeholder-black absolute left-0 top-0 z-[1] h-full w-full flex flex-col justify-between items-start p-6 md:p-8">
                                 <div className="uppercase font-roboto-condensed
@@ -77,7 +77,7 @@ export default function MainSecondBlock({data}) {
                         </div>}
                     </div>
                 </div>
-                <div className="hidden xl:block">
+                <div className="hidden h-[644px] xl:block">
                     {data.secondBlockAwardsTitle && <div
                         className="text-white overflow-hidden relative min-h-[420px] w-full h-full rounded-3xl">
                         <div
