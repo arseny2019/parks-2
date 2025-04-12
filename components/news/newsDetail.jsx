@@ -16,10 +16,10 @@ const NewsDetail = ({detail, previousNews}) => {
                         text-[13px] leading-[19px] lg:mt-3
                         md:text-[14px] md:leading-[21px]
                     ">{formatDate(detail.date)}</p>
-                {detail.tags && detail.tags.length && <div className="mt-5 flex gap-x-2 gap-y-2">{detail.tags.map(tag => tag.link ?
-                    <Link target="_blank" href={tag.link}>
+                {detail.tags && detail.tags.length && <div className="mt-5 flex gap-x-2 gap-y-2 flex-wrap">{detail.tags.map(tag => tag.link ?
+                    <Link key={tag.name} target="_blank" href={tag.link}>
                         <div className="news-tag news-tag__link">{tag.name}</div>
-                    </Link> : <div className="news-tag">{tag.name}</div>
+                    </Link> : <div key={tag.name} className="news-tag">{tag.name}</div>
                 )}</div>}
                 {detail.content && <div className="mt-8 news-content" dangerouslySetInnerHTML={{__html: detail.content}}></div>}
                 <div className="mt-12 md:mt-16 grid grid-cols-1 gap-y-4">

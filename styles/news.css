@@ -55,7 +55,7 @@
 
 .news-tag {
     @apply text-[16px] leading-[19px] font-medium text-[rgb(0,_148,_204)]
-    px-4 py-2.5 bg-[rgba(0,_148,_204,_0.1)] rounded-3xl;
+    px-4 py-2.5 bg-[rgba(0,_148,_204,_0.1)] rounded-3xl whitespace-nowrap;
 }
 
 .news-tag__link {

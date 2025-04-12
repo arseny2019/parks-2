@@ -82,7 +82,9 @@ export default function InteractiveMap({regions}) {
                 <p ref={tooltipTextRef} className="font-roboto-condensed font-bold uppercase text-main-black text-[16px] leading-[20px]">
                     {activeRegion && activeRegion.regionName}
                 </p>
-                <Link className="mt-[5px] md:hidden text-main-blue text-[14px] leading-[17px] font-[600]" href={`/regions/${activeRegion.regionSlug}`}>Перейти</Link>
+                <div onClick={() => {
+                    router.push('/regions/' + activeRegion.regionSlug);
+                }} className="mt-[5px] md:hidden text-main-blue text-[14px] leading-[17px] font-[600]">Перейти</div>
             </div>}
             <svg className="svg-map aspect-[1.86]" ref={svgRef} viewBox="0 0 1362 730" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="PR-map-2">

@@ -12,10 +12,10 @@ export default function RegionsComponent({archivePageData, regionGroups, regions
     useEffect(() => {
         if (filterStr) {
             let cloned = JSON.parse(JSON.stringify(regionGroups)).map(group => {
-                group.regions = group.regions.filter(region => region.regionName.toLowerCase().includes(filterStr));
+                group.regions = group.regions.filter(region => {
+                    return region.regionName.toLowerCase().includes(filterStr.toLowerCase());});
                 return group;
             });
-            console.log('cloned', cloned);
             setFilteredData(cloned);
         } else {
             setFilteredData(regionGroups);
@@ -58,7 +58,7 @@ export default function RegionsComponent({archivePageData, regionGroups, regions
                             </clipPath>
                         </defs>
                     </svg>
-                    {filterStr && <svg className="top-[50%] translate-y-[-50%] right-8 cursor-pointer absolute duration-300 text-placeholder-black hover:text-main-black" onClick={() => {
+                    {filterStr && <svg className="top-[50%] translate-y-[-50%] right-4 xl:right-8 cursor-pointer absolute duration-300 text-placeholder-black hover:text-main-black" onClick={() => {
                         inputRef.current.value = '';
                         setFilterStr('');
                     }} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,21 +77,22 @@ export default function RegionsComponent({archivePageData, regionGroups, regions
                     " placeholder="Введите название региона"
                            type="text"/>
                 </label>
-                <div className="grid gap-x-8 gap-y-16 mt-16 min-h-[320px]
+                {filteredData.every(group => group.regions && group.regions.length === 0) ?
+                    <div className="mt-16 uppercase text-[16px] leading-[150%] font-[600]
+                    text-center text-secondary-black">Ничего не найдено</div> : <div className="grid gap-x-8 gap-y-16 mt-16 min-h-[320px]
                 sm:grid-cols-2
                 md:grid-cols-3
                 ">{filteredData.map(group => group.regions && group.regions.length > 0 && <div key={group.name}>
-                    <p className="text-[14px] leading-[150%] text-placeholder-black font-[600] uppercase
+                        <p className="text-[14px] leading-[150%] text-placeholder-black font-[600] uppercase
                     sm:text-[16px]
                     ">{group.name}</p>
-                    {group.regions.map(region => <div key={region.regionSlug} className="mt-4 text-[16px] leading-[150%]
+                        {group.regions.map(region => <div key={region.regionSlug} className="mt-4 text-[16px] leading-[150%]
                     md:text-[18px]
                     ">
-                        <Link className="cursor-pointer"
-                              href={`/regions/${region.regionSlug}`}>{region.regionName}</Link>
-                    </div>)}
-                </div>)}</div>
-
+                            <Link className="cursor-pointer"
+                                  href={`/regions/${region.regionSlug}`}>{region.regionName}</Link>
+                        </div>)}
+                    </div>)}</div>}
             </div>
         </>
     )

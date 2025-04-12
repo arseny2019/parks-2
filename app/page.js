@@ -105,7 +105,7 @@ export default async function Home() {
                         xl:py-6 xl:text-[18px] xl:rounded-[36px]
                         lg:mt-8
                         " href="/projects">
-                        Больше примеров
+                        Больше проектов
                     </Link>
                 </div>
                 <MainNewsBlock news={news}></MainNewsBlock>

@@ -9,12 +9,12 @@
 .custom-list-item::before {
     content: '';
     position: absolute;
-    background-color: rgba(57, 180, 98, 1);
     width: 10px;
     height: 10px;
     border-radius: 50%;
     top: 8px;
     left: 0;
+    @apply bg-main-blue;
 }
 
 @media (min-width: 601px) {

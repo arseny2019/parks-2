@@ -71,7 +71,7 @@ const Navigation = ({directions, active, closeCallback, contacts, menu}) => {
                     <div>
                         <p className="font-[500] text-[13px] leading-[19px]
                             text-placeholder-white uppercase">Информация</p>
-                        <div className="mt-6 flex flex-col gap-y-5 items-start">
+                        <div className="mt-6 flex flex-col gap-y-8 items-start">
                             {menu && menu.elements && menu.elements.map((elem) => <Link
                                 onClick={closeCallback}
                                 key={elem.label + elem.link + 'footer'}
