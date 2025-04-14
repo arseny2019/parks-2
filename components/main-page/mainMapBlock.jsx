@@ -7,14 +7,16 @@ const MainMapBlock = ({mapBlockText, mapBlockLink, mapBlockImage}) => {
     return (
         <div className="relative border-b-[1px] bg-black border-[rgba(255,_255,_255,_0.06)]">
             <div className="flex items-center justify-center map-background text-white
-                h-[580px] py-[120px]
+                h-[640px]
                 sm:h-[700px]
-                md:h-[860px] md:py-[190px]
+                md:h-[580px]
+                lg:h-[660px]
+                xl:h-[860px]
                 "
                  style={{backgroundImage: 'url(' + getImageURL(mapBlockImage) + ')'}}
             >
                 <div className="absolute left-0 top-0 w-full h-full upper-gradient"></div>
-                <div className="h-full z-[5] flex flex-col items-center justify-between max-w-[700px]">
+                <div className="z-[5] flex flex-col items-center max-w-[700px]">
                     <Image quality={100} width={220} height={65}
                            src="/logo-green.svg"
                            alt="Общероссийская общественная организация Парки России"></Image>

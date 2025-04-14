@@ -121,6 +121,11 @@ export default async function ProjectDetailPage({params}) {
                                 ">
                                         {feature.description}
                                     </p>}
+                                    {feature.link && <div><Link
+                                        className="font-roboto font-[600] text-main-blue
+                                        text-[16px] leading-6 hover:opacity-80
+                                    "
+                                        href={feature.link || ''}>Подробнее</Link></div>}
                                 </div>
                             ))}
                         </div>

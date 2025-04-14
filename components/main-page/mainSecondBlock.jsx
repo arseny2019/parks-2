@@ -56,7 +56,7 @@ export default function MainSecondBlock({data}) {
                             className="text-white overflow-hidden xl:hidden relative w-full h-[320px] lg:h-[500px] rounded-3xl">
                             <div
                                 className="bg-placeholder-black absolute left-0 top-0 z-[1] h-full w-full flex flex-col justify-between items-start p-6 md:p-8">
-                                <div className="uppercase font-roboto-condensed
+                                <div className="uppercase font-roboto-condensed font-bold
                     text-[36px] leading-[130%]
                     md:text-[40px]
                     lg:text-[52px]">{data.secondBlockAwardsTitle}</div>
@@ -82,7 +82,7 @@ export default function MainSecondBlock({data}) {
                         className="text-white overflow-hidden relative min-h-[420px] w-full h-full rounded-3xl">
                         <div
                             className="bg-placeholder-black absolute left-0 top-0 z-[1] h-full w-full flex flex-col justify-between items-start p-8">
-                            <div className="uppercase font-roboto-condensed
+                            <div className="uppercase font-roboto-condensed font-bold
                     text-[36px] leading-[130%]
                     md:text-[40px]
                     lg:text-[52px]">{data.secondBlockAwardsTitle}</div>
