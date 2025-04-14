@@ -37,7 +37,7 @@ const RegionsDetail = ({detail}) => {
                 lg:py-[120px] lg:gap-y-[120px]
                 xl:py-[150px]
             ">
-                <div>
+                {detail.employees && detail.employees.length > 0 && <div>
                     <p className="font-[600] leading-[150%] text-placeholder-black uppercase
                         text-[16px]
                         lg:text-[18px]"
@@ -56,8 +56,8 @@ const RegionsDetail = ({detail}) => {
                             </div>
                         </div>)}
                     </div>
-                </div>
-                <div>
+                </div>}
+                {(detail.phone || detail.email || detail.address) && <div>
                     <p className="font-[600] leading-[150%] text-placeholder-black uppercase
                         text-[16px]
                         lg:text-[18px]"
@@ -78,7 +78,7 @@ const RegionsDetail = ({detail}) => {
                                 text-[16px] leading-[150%]
                                 md:text-[18px]
                             ">{detail.address}</p>
-                </div>
+                </div>}
                 {detail.projects && detail.projects.length > 0 && <div>
                     <p className="font-[600] leading-[150%] text-placeholder-black uppercase
                         text-[16px]
