@@ -193,10 +193,10 @@ export default async function DirectionDetailPage({params}) {
                     {technologies && technologies.length > 0 &&
                         <TechnologyGrid technologies_title={detail.technologies_title}
                                         technologies={technologies}></TechnologyGrid>}
-                    <Link href="/contacts" className="block text-center w-full font-[500] bg-[rgba(10,_10,_10,_0.08)] duration-200 text-[rgba(10,_10,_10,_0.4)] hover:text-[rgba(10,_10,_10,_0.8)]
+                    <Link href={detail.button_link || '/contacts'} className="block text-center w-full font-[500] bg-[rgba(10,_10,_10,_0.08)] duration-200 text-[rgba(10,_10,_10,_0.4)] hover:text-[rgba(10,_10,_10,_0.8)]
                        py-[30px] text-[20px] leading-[150%] rounded-[45px]
                        lg:py-[40px] lg:text-[22px] lg:rounded-[57px]
-                    ">Связаться с нами</Link>
+                    ">{detail.button_text || 'Связаться с нами'}</Link>
                 </div>
             </div>
             <div id="blackWrapper">

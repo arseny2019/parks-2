@@ -109,6 +109,42 @@ export default async function DevelopmentPage({params}) {
                     xl:text-[40px]
                     2xl:text-[48px]
                     ">{detail.text}</p>}
+                    {detail.features && detail.features.length > 0 && <div>
+                        {detail.features_title && <h4 className="font-bold font-roboto-condensed uppercase
+                        text-[24px] leading-[36px] mb-8
+                        lg:text-[30px] lg:leading-[45px] lg:mb-16
+                        ">{detail.features_title}</h4>}
+                        <div className="grid
+                        grid-cols-1 gap-y-[40px]
+                        md:grid-cols-2 md:gap-x-6 md:gap-y-[48px]
+                        xl:gap-y-[80px]
+                        ">
+                            {detail.features.map(feature => (
+                                <div key={feature.title || feature.description} className="custom-list-item flex flex-col
+                                gap-y-[6px]
+                                sm:gap-y-2
+                                md:gap-y-3 md:pr-8
+                            ">
+                                    {feature.title && <p className="font-[500]
+                                    text-[18px] leading-[27px]
+                                    xl:text-[22px] xl:leading-[33px]
+                                ">{feature.title}</p>}
+                                    {feature.description && <p className="text-secondary-black
+                                    text-[16px] leading-6
+                                    md:text-[18px] md:leading-[27px]
+                                ">
+                                        {feature.description}
+                                    </p>}
+                                    {feature.link && <div><Link
+                                        className="font-roboto font-[600] text-main-green
+                                        text-[16px] leading-6
+                                        md:text-[18px] md:leading-[27px] hover:opacity-80
+                                    "
+                                        href={feature.link}>Подробнее</Link></div>}
+                                </div>
+                            ))}
+                        </div>
+                    </div>}
                     {employees && <div className="grid grid-cols-1
                         gap-y-12
                         md:gap-y-16 md:gap-x-8 md:grid-cols-2
