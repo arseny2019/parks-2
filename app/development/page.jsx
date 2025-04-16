@@ -19,7 +19,7 @@ async function getContacts() {
 
 async function getDevelopmentDetail() {
     return directus.request(readItems('development', {
-        fields: ['*']
+        fields: ['*', 'employees.*', 'technologies.*']
     })).catch(() => notFound());
 }
 
@@ -88,11 +88,16 @@ export default async function DevelopmentPage({params}) {
     if (!detail) {
         notFound();
     }
+
     let employees;
     if (detail.employees) {
-        employees = await getEmployees(detail.employees);
+        employees = await getEmployees(detail.employees.map(e => e.employee_id));
     }
-    let technologies = await getTechnologies(detail.technologies);
+
+    let technologies;
+    if (detail.technologies) {
+        technologies = await getTechnologies(detail.technologies.map(e => e.technologies_id));
+    }
 
     const menu = await getInformationMenu();
 

@@ -18,7 +18,7 @@ async function getContacts() {
 
 async function getAboutDetail() {
     return directus.request(readItems('about', {
-        fields: ['*']
+        fields: ['*', 'employees.*', 'employees2.*']
     })).catch(() => notFound());
 }
 
@@ -67,7 +67,7 @@ export async function generateMetadata() {
 }
 
 
-export default async function DevelopmentPage({params}) {
+export default async function AboutPage({params}) {
     const directions = await getDirections();
     const contacts = await getContacts();
     const detail = await getAboutDetail();
@@ -78,15 +78,23 @@ export default async function DevelopmentPage({params}) {
     let employees;
     let employees2;
     if (detail.employees) {
-        employees = await getEmployees(detail.employees);
+        console.log('try to load employees', detail.employees);
+        if (detail.employees.length > 0) {
+            employees = await getEmployees(detail.employees.map(e => +e.item));
+        }
+
     }
     if (detail.employees2) {
-        employees2 = await getEmployees(detail.employees2);
+        console.log('try to load employees2', detail.employees2);
+        if (detail.employees2.length > 0) {
+            employees2 = await getEmployees(detail.employees2.map(e => +e.item));
+        }
     }
 
     const menu = await getInformationMenu();
 
     console.log('employees', employees);
+    console.log('employees2', employees2);
 
 
     return (
@@ -145,39 +153,48 @@ export default async function DevelopmentPage({params}) {
                         </div>
                     </div>}
                     {employees && <div>
-                        {detail.employeesTitle && <h3 className="mb-6 uppercase text-[32px] leading-[42px] md:text-[36px] md:leading-[54px]">{detail.employeesTitle}</h3>}
+                        {detail.employeesTitle &&
+                            <h3 className="mb-6 uppercase text-[32px] leading-[42px] md:text-[36px] md:leading-[54px]">{detail.employeesTitle}</h3>}
                         <div className="grid grid-cols-1
                         gap-y-12
                         md:gap-y-16 md:gap-x-8 md:grid-cols-2
                         2xl:gap-x-16
                     ">
-                        {employees && employees.length > 0 && employees.map((employee) => <div key={employee.name}
-                                                                                                                    className="flex gap-x-4 xl:gap-x-5">
-                            <Image className="w-20 h-20 xl:w-[100px] xl:h-[100px] rounded-[50%]"
-                                   width={80} height={80} src={employee.image ? getImageURL(employee.image) : '/person-placeholder.png'} alt={employee.name}></Image>
-                            <div>
-                                <p className="font-medium text-[18px] xl:text-[22px] leading-[150%]">{employee.name}</p>
-                                <p className="font-medium text-placeholder-black text-[14px] leading-[150%] mt-2 xl:text-[16px]">{employee.post}</p>
-                            </div>
-                        </div>)}
-                    </div></div>}
+                            {employees && employees.length > 0 && employees.map((employee) => <div key={employee.name}
+                                                                                                   className="flex gap-x-4 xl:gap-x-5">
+                                <Image className="w-20 h-20 xl:w-[100px] xl:h-[100px] rounded-[50%]"
+                                       width={80} height={80}
+                                       src={employee.image ? getImageURL(employee.image) : '/person-placeholder.png'}
+                                       alt={employee.name}></Image>
+                                <div>
+                                    <p className="font-medium text-[18px] xl:text-[22px] leading-[150%]">{employee.name}</p>
+                                    <p className="font-medium text-placeholder-black text-[14px] leading-[150%] mt-2 xl:text-[16px]">{employee.post}</p>
+                                </div>
+                            </div>)}
+                        </div>
+                    </div>}
                     {employees2 && <div>
-                        {detail.employees2Title && <h3 className="mb-6 uppercase text-[32px] leading-[42px] md:text-[36px] md:leading-[54px]">{detail.employees2Title}</h3>}
+                        {detail.employees2Title &&
+                            <h3 className="mb-6 uppercase text-[32px] leading-[42px] md:text-[36px] md:leading-[54px]">{detail.employees2Title}</h3>}
                         <div className="grid grid-cols-1
                         gap-y-12
                         md:gap-y-16 md:gap-x-8 md:grid-cols-2
                         2xl:gap-x-16
                     ">
-                        {employees2 && employees2.length > 0 && employees2.map((employee) => <div key={employee.name}
-                                                                                                                    className="flex gap-x-4 xl:gap-x-5">
-                            <Image className="w-20 h-20 xl:w-[100px] xl:h-[100px] rounded-[50%]"
-                                   width={80} height={80} src={employee.image ? getImageURL(employee.image) : '/person-placeholder.png'} alt={employee.name}></Image>
-                            <div>
-                                <p className="font-medium text-[18px] xl:text-[22px] leading-[150%]">{employee.name}</p>
-                                <p className="font-medium text-placeholder-black text-[14px] leading-[150%] mt-2 xl:text-[16px]">{employee.post}</p>
-                            </div>
-                        </div>)}
-                    </div></div>}
+                            {employees2 && employees2.length > 0 && employees2.map((employee) => <div
+                                key={employee.name}
+                                className="flex gap-x-4 xl:gap-x-5">
+                                <Image className="w-20 h-20 xl:w-[100px] xl:h-[100px] rounded-[50%]"
+                                       width={80} height={80}
+                                       src={employee.image ? getImageURL(employee.image) : '/person-placeholder.png'}
+                                       alt={employee.name}></Image>
+                                <div>
+                                    <p className="font-medium text-[18px] xl:text-[22px] leading-[150%]">{employee.name}</p>
+                                    <p className="font-medium text-placeholder-black text-[14px] leading-[150%] mt-2 xl:text-[16px]">{employee.post}</p>
+                                </div>
+                            </div>)}
+                        </div>
+                    </div>}
                 </div>
             </div>
             <div id="blackWrapper">

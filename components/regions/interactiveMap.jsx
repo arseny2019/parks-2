@@ -69,9 +69,19 @@ export default function InteractiveMap({regions}) {
             setActiveRegion(region);
         }
 
+        function isTouchDevice() {
+            return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+        }
+
         if (svgRef.current && regions && !mouseOverHandler) {
             setMouseOverHandler(handleMouseMoveOnMap);
-            svgRef.current.addEventListener('mouseover', handleMouseMoveOnMap);
+            if (isTouchDevice()) {
+                svgRef.current.addEventListener('click', handleMouseMoveOnMap);
+            } else {
+                svgRef.current.addEventListener('mouseover', handleMouseMoveOnMap);
+            }
         }
 
     }, [svgRef.current, regions]);
