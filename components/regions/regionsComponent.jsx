@@ -89,7 +89,7 @@ export default function RegionsComponent({archivePageData, regionGroups, regions
                         {group.regions.map(region => <div key={region.regionSlug} className="mt-4 text-[16px] leading-[150%]
                     md:text-[18px]
                     ">
-                            <Link className="cursor-pointer"
+                            <Link className="hover:opacity-80 duration-200 cursor-pointer"
                                   href={`/regions/${region.regionSlug}`}>{region.regionName}</Link>
                         </div>)}
                     </div>)}</div>}

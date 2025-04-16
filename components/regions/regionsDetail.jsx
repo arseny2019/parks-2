@@ -37,7 +37,7 @@ const RegionsDetail = ({detail}) => {
                 lg:py-[120px] lg:gap-y-[120px]
                 xl:py-[150px]
             ">
-                {detail.employees && detail.employees.length > 0 && <div>
+                {detail.employees && detail.employees.length > 0 && <div className="max-w-[600px]">
                     <p className="font-[600] leading-[150%] text-placeholder-black uppercase
                         text-[16px]
                         lg:text-[18px]"

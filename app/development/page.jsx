@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import DirectionTopBlock from "@/components/directions/directionTopBlock";
+import TechnologyGrid from "@/components/directions/technologyGrid";
 
 async function getDirections() {
     return directus.request(readItems('directions'));
@@ -30,6 +31,18 @@ async function getEmployees(ids) {
                 '_in': ids
             }
         },
+    })).catch(() => notFound());
+}
+
+async function getTechnologies(ids) {
+    return directus.request(readItems('technologies', {
+        filter: {
+            id:
+                {
+                    '_in': ids
+                }
+        },
+        fields: ['*', 'gallery.*']
     })).catch(() => notFound());
 }
 
@@ -79,6 +92,7 @@ export default async function DevelopmentPage({params}) {
     if (detail.employees) {
         employees = await getEmployees(detail.employees);
     }
+    let technologies = await getTechnologies(detail.technologies);
 
     const menu = await getInformationMenu();
 
@@ -136,7 +150,7 @@ export default async function DevelopmentPage({params}) {
                                         {feature.description}
                                     </p>}
                                     {feature.link && <div><Link
-                                        className="font-roboto font-[600] text-main-green
+                                        className="font-roboto font-[600] text-main-blue
                                         text-[16px] leading-6
                                         md:text-[18px] md:leading-[27px] hover:opacity-80
                                     "
@@ -160,6 +174,9 @@ export default async function DevelopmentPage({params}) {
                             </div>
                         </div>)}
                     </div>}
+                    {technologies && technologies.length > 0 &&
+                        <TechnologyGrid technologies_title={detail.technologies_title}
+                                        technologies={technologies}></TechnologyGrid>}
                     <Link href="/contacts" className="block text-center w-full font-[500] bg-[rgba(10,_10,_10,_0.08)] duration-200 text-[rgba(10,_10,_10,_0.4)] hover:text-[rgba(10,_10,_10,_0.8)]
                        py-[30px] text-[20px] leading-[150%] rounded-[45px]
                        lg:py-[40px] lg:text-[22px] lg:rounded-[57px]

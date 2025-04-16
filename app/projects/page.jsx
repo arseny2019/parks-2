@@ -9,7 +9,7 @@ import Link from "next/link";
 import {notFound} from "next/navigation";
 
 async function getProjects() {
-    return directus.request(readItems('projects', {limit: 3}));
+    return directus.request(readItems('projects'));
 }
 
 async function getDirections() {
