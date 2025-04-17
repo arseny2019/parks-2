@@ -60,7 +60,7 @@ export default function InteractiveMap({regions}) {
 
                 const width = tooltipRef.current.clientWidth;
                 const offsetX = e.pageX + width >= scrollContainer.clientWidth ? e.pageX - width - 30 : e.pageX;
-                setTooltipPosition({x: offsetX, y: e.pageY});
+                setTooltipPosition({x: offsetX > 0 ? offsetX : 0, y: e.pageY});
             });
         }
 
