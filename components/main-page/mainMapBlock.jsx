@@ -21,7 +21,7 @@ const MainMapBlock = ({mapBlockText, mapBlockLink, mapBlockImage}) => {
                            src="/logo-green.svg"
                            alt="Общероссийская общественная организация Парки России"></Image>
                     <div className="flex flex-col items-center mt-20">
-                        <p className="text-[16px] leading-6 font-inter text-center
+                        <p className="px-6 md:px-0 text-[16px] leading-6 font-inter text-center
                         lg:text-[18px] lg:leading-[27px]
                         xl:text-[20px] xl:leading-[30px]
                         ">{mapBlockText}</p>
