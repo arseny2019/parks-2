@@ -14,6 +14,12 @@ export default function InteractiveMap({regions}) {
     const [tooltipPosition, setTooltipPosition] = useState({x: 0, y: 0});
     const router = useRouter();
 
+    function isTouchDevice() {
+        return (('ontouchstart' in window) ||
+            (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0));
+    }
+
     useEffect(() => {
         if (!regions) {
             return;
@@ -51,6 +57,14 @@ export default function InteractiveMap({regions}) {
                 setTooltipPosition({x: offsetX, y: e.pageY});
             });
         }
+
+        if (isTouchDevice()) {
+            document.addEventListener('click', updateTooltipPosition);
+            document.addEventListener('touchstart', updateTooltipPosition);
+        } else {
+            document.addEventListener('mousemove', updateTooltipPosition);
+        }
+
         document.addEventListener('mousemove', updateTooltipPosition);
 
         document.querySelector('.map-scroll-container').addEventListener('scroll', () => {
@@ -58,7 +72,12 @@ export default function InteractiveMap({regions}) {
         });
 
         return () => {
-            document.removeEventListener('mousemove', updateTooltipPosition);
+            if (isTouchDevice()) {
+                document.removeEventListener('click', updateTooltipPosition);
+                document.removeEventListener('touchstart', updateTooltipPosition);
+            } else {
+                document.removeEventListener('mousemove', updateTooltipPosition);
+            }
         }
     }, [])
 
@@ -66,21 +85,16 @@ export default function InteractiveMap({regions}) {
         function handleMouseMoveOnMap(e) {
             const id =  e?.target.getAttribute('id');
             const region = regions.find(region => id === region.regionCode);
+            console.log('region', region);
             setActiveRegion(region);
-        }
-
-        function isTouchDevice() {
-            return (('ontouchstart' in window) ||
-                (navigator.maxTouchPoints > 0) ||
-                (navigator.msMaxTouchPoints > 0));
         }
 
         if (svgRef.current && regions && !mouseOverHandler) {
             setMouseOverHandler(handleMouseMoveOnMap);
             if (isTouchDevice()) {
-                svgRef.current.addEventListener('click', handleMouseMoveOnMap);
+                document.addEventListener('click', handleMouseMoveOnMap);
             } else {
-                svgRef.current.addEventListener('mouseover', handleMouseMoveOnMap);
+                document.addEventListener('mouseover', handleMouseMoveOnMap);
             }
         }
 
