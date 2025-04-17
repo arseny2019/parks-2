@@ -52,6 +52,12 @@ export default function InteractiveMap({regions}) {
                 if (!tooltipRef.current) {
                     return;
                 }
+
+                const clickOnTooltip = tooltipRef?.current?.contains(e?.target);
+                if (clickOnTooltip) {
+                    return;
+                }
+
                 const width = tooltipRef.current.clientWidth;
                 const offsetX = e.pageX + width >= scrollContainer.clientWidth ? e.pageX - width - 30 : e.pageX;
                 setTooltipPosition({x: offsetX, y: e.pageY});
@@ -83,9 +89,19 @@ export default function InteractiveMap({regions}) {
 
     useEffect(() => {
         function handleMouseMoveOnMap(e) {
+            const clickOnTooltip = tooltipRef?.current?.contains(e?.target);
+            if (clickOnTooltip) {
+                return;
+            }
+
             const id =  e?.target.getAttribute('id');
             const region = regions.find(region => id === region.regionCode);
-            console.log('region', region);
+            document.querySelectorAll('.forced-active').forEach((el) => {
+                el.classList.remove('forced-active');
+            });
+            if (region) {
+                e?.target.classList.add('forced-active');
+            }
             setActiveRegion(region);
         }
 
