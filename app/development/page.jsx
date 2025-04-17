@@ -90,12 +90,12 @@ export default async function DevelopmentPage({params}) {
     }
 
     let employees;
-    if (detail.employees) {
+    if (detail.employees && detail.employees.length > 0) {
         employees = await getEmployees(detail.employees.map(e => e.employee_id));
     }
 
     let technologies;
-    if (detail.technologies) {
+    if (detail.technologies && detail.technologies.length > 0) {
         technologies = await getTechnologies(detail.technologies.map(e => e.technologies_id));
     }
 
