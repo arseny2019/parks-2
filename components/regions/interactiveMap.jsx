@@ -18,8 +18,16 @@ export default function InteractiveMap({regions}) {
         if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
             return true;
         }
-        const userAgent = navigator.userAgent.toLowerCase();
-        return /ipad/.test(userAgent);
+
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Новый iPadOS (Safari притворяется macOS)
+        const isMacLike = navigator.platform === 'MacIntel' && typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 1;
+
+        // Старые iPad
+        const isOldIpad = /iPad/.test(ua);
+
+        return isOldIpad || isMacLike;
     }
 
 
