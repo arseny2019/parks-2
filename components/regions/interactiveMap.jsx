@@ -15,10 +15,13 @@ export default function InteractiveMap({regions}) {
     const router = useRouter();
 
     function isTouchDevice() {
-        return (('ontouchstart' in window) ||
-            (navigator.maxTouchPoints > 0) ||
-            (navigator.msMaxTouchPoints > 0));
+        if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
+            return true;
+        }
+        const userAgent = navigator.userAgent.toLowerCase();
+        return /ipad/.test(userAgent);
     }
+
 
     useEffect(() => {
         if (!regions) {
