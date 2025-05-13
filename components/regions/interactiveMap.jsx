@@ -127,6 +127,11 @@ export default function InteractiveMap({regions}) {
 
     }, [svgRef.current, regions]);
 
+    useEffect(() => {
+        console.log('Is device touchable?', isTouchDevice());
+        console.log('Navigator:', window.navigator);
+    }, []);
+
     return (
         <div className="w-full min-w-[768px] md:min-w-[auto]">
             {activeRegion && <div className="tooltip" style={{left: tooltipPosition.x + 10, top: tooltipPosition.y + 10}} ref={tooltipRef}>
