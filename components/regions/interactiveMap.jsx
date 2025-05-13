@@ -1,8 +1,24 @@
 'use client';
 
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+
+function isTouchDevice() {
+    if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
+        return true;
+    }
+
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+    // Новый iPadOS (Safari притворяется macOS)
+    const isMacLike = navigator.platform === 'MacIntel' && typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 1
+
+    // Старые iPad
+    const isOldIpad = /iPad/.test(ua);
+
+    return isOldIpad || isMacLike;
+}
 
 export default function InteractiveMap({regions}) {
     const svgRef = useRef(null);
@@ -12,24 +28,11 @@ export default function InteractiveMap({regions}) {
     const [availableRegions, setAvailableRegions] = useState([]);
     const [activeRegion, setActiveRegion] = useState(null);
     const [tooltipPosition, setTooltipPosition] = useState({x: 0, y: 0});
+    const [touchDevice, setTouchDevice] = useState(isTouchDevice());
     const router = useRouter();
-
-    function isTouchDevice() {
-        if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
-            return true;
-        }
-
-        const ua = navigator.userAgent || navigator.vendor || window.opera;
-
-        // Новый iPadOS (Safari притворяется macOS)
-        const isMacLike = navigator.platform === 'MacIntel' && typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 1;
-
-        // Старые iPad
-        const isOldIpad = /iPad/.test(ua);
-
-        return isOldIpad || isMacLike;
-    }
-
+    const linkClasses = useMemo(() => {
+        return touchDevice ? 'mt-[5px] text-main-blue text-[14px] leading-[17px] font-[600]' : 'hidden';
+    }, [touchDevice]);
 
     useEffect(() => {
         if (!regions) {
@@ -75,7 +78,7 @@ export default function InteractiveMap({regions}) {
             });
         }
 
-        if (isTouchDevice()) {
+        if (touchDevice) {
             document.addEventListener('click', updateTooltipPosition);
             document.addEventListener('touchstart', updateTooltipPosition);
         } else {
@@ -89,14 +92,14 @@ export default function InteractiveMap({regions}) {
         });
 
         return () => {
-            if (isTouchDevice()) {
+            if (touchDevice) {
                 document.removeEventListener('click', updateTooltipPosition);
                 document.removeEventListener('touchstart', updateTooltipPosition);
             } else {
                 document.removeEventListener('mousemove', updateTooltipPosition);
             }
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         function handleMouseMoveOnMap(e) {
@@ -118,7 +121,7 @@ export default function InteractiveMap({regions}) {
 
         if (svgRef.current && regions && !mouseOverHandler) {
             setMouseOverHandler(handleMouseMoveOnMap);
-            if (isTouchDevice()) {
+            if (touchDevice) {
                 document.addEventListener('click', handleMouseMoveOnMap);
             } else {
                 document.addEventListener('mouseover', handleMouseMoveOnMap);
@@ -128,7 +131,7 @@ export default function InteractiveMap({regions}) {
     }, [svgRef.current, regions]);
 
     useEffect(() => {
-        console.log('Is device touchable?', isTouchDevice());
+        console.log('Is device touchable?', touchDevice);
         console.log('Navigator:', window.navigator);
     }, []);
 
@@ -138,7 +141,7 @@ export default function InteractiveMap({regions}) {
                 <p ref={tooltipTextRef} className="font-roboto-condensed font-bold uppercase text-main-black text-[16px] leading-[20px]">
                     {activeRegion && activeRegion.regionName}
                 </p>
-                <Link className="mt-[5px] md:hidden text-main-blue text-[14px] leading-[17px] font-[600]" href={`/regions/${activeRegion.regionSlug}`}>Перейти</Link>
+                <Link className={linkClasses} href={`/regions/${activeRegion.regionSlug}`}>Перейти</Link>
             </div>}
             <svg className="svg-map aspect-[1.86]" ref={svgRef} viewBox="0 0 1362 730" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="PR-map-2">
