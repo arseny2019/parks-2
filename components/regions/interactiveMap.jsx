@@ -44,7 +44,7 @@ export default function InteractiveMap({regions}) {
             const pathId = g.getAttribute('id');
             if (g.getAttribute('id') && regions.find((region) => region.regionCode === g.getAttribute('id'))) {
                 g.classList.add('active');
-                if (window.innerWidth > 767) {
+                if (!touchDevice) {
                     const regionSlug = regions.find((region) => region.regionCode === g.getAttribute('id'))?.regionSlug;
                     if (regionSlug) {
                         g.addEventListener('click', () => {
