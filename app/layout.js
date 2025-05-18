@@ -1,5 +1,7 @@
 import {Inter, Roboto, Roboto_Condensed} from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
+import {YandexMetrikaContainer} from "@/components/metrics";
 
 const roboto = Roboto({
     variable: "--font-roboto",
@@ -30,6 +32,9 @@ export default function RootLayout({children}) {
             <body
                 className={`${roboto.variable} ${robotoCondensed.variable} ${inter.variable} font-sans antialiased`}
             >
+            <Suspense>
+                <YandexMetrikaContainer enabled={true} />
+            </Suspense>;
             {children}
             </body>
         </html>
