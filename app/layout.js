@@ -34,7 +34,7 @@ export default function RootLayout({children}) {
             >
             <Suspense>
                 <YandexMetrikaContainer enabled={true} />
-            </Suspense>;
+            </Suspense>
             {children}
             </body>
         </html>
