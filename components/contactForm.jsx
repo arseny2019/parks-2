@@ -4,6 +4,7 @@ import directus from "@/lib/directus";
 import {createItem} from "@directus/sdk";
 import {publicUserToken} from "@/helpers/directus";
 import {useEffect, useState} from "react";
+import Link from "next/link";
 
 export default function ContactForm() {
     const [showSuccessWindow, setShowSuccessWindow] = useState(false);
@@ -140,7 +141,7 @@ export default function ContactForm() {
                     className="rounded-[32px] w-full text-center bg-background-black block font-[500] py-4 disabled:cursor-not-allowed disabled:bg-[rgba(10,_10,_10,_0.5)] text-[16px] leading-6 text-white">Отправить
                 </button>
                 <p className="mt-4 text-[12px] leading-[125%] text-placeholder-black">Нажимая кнопку «Отправить», вы
-                    даете согласие на <span className="text-secondary-black">обработку персональных данных</span></p>
+                    даете согласие на <Link href="/privacy" className="text-secondary-black">обработку персональных данных</Link></p>
             </div></>}
         </form>
     )
