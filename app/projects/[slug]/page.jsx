@@ -154,8 +154,8 @@ export default async function ProjectDetailPage({params}) {
 
                     {detail.video_2 && <video loop={true} muted={true} width={1360} height={0}
                                      className="rounded-[16px] w-full h-full object-cover" controls={true} autoPlay={false}>
-                        <source src={getImageURL(detail.video_2 + '#t=0.001')}/>
-                        <source src={getImageURL(detail.video_2_mp4 + '#t=0.001')}/>
+                        <source src={getImageURL(detail.video_2) + '#t=0.001'}/>
+                        <source src={getImageURL(detail.video_2_mp4) + '#t=0.001'}/>
                     </video>}
 
                     <Link href={detail.button_link || '/contacts'} className="block text-center w-full font-[500] bg-[rgba(10,_10,_10,_0.08)] duration-200 text-[rgba(10,_10,_10,_0.4)] hover:text-[rgba(10,_10,_10,_0.8)]
