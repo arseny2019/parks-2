@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import ProjectTopBlock from "@/components/projects/projectTopBlock";
+import VideoJS from "@/components/video";
 
 async function getDirections() {
     return directus.request(readItems('directions'));
@@ -70,6 +71,20 @@ export default async function ProjectDetailPage({params}) {
         notFound();
     }
     const menu = await getInformationMenu();
+    console.log('detail', detail);
+
+    const contentVideoConfig = {
+        autoplay: true,
+        controls: true,
+        responsive: true,
+        fluid: true,
+        sources: [{
+            src: getImageURL(detail.video_2),
+            type: 'video/mp4'
+        }]
+    };
+
+    console.log('contentVideoConfig', contentVideoConfig);
 
     return (
         <>
@@ -140,6 +155,8 @@ export default async function ProjectDetailPage({params}) {
                                 width={900} height={0} src={getImageURL(item.directus_files_id)}
                                 alt="Изображение из галереи"/>)}
                         </div>}
+
+                    {detail.video_2 && <VideoJS options={contentVideoConfig} />}
 
                     <Link href={detail.button_link || '/contacts'} className="block text-center w-full font-[500] bg-[rgba(10,_10,_10,_0.08)] duration-200 text-[rgba(10,_10,_10,_0.4)] hover:text-[rgba(10,_10,_10,_0.8)]
                        py-[30px] text-[20px] leading-[150%] rounded-[45px]
