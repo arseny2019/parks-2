@@ -7,7 +7,6 @@ import Footer from "@/components/footer";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import ProjectTopBlock from "@/components/projects/projectTopBlock";
-import VideoJS from "@/components/video";
 
 async function getDirections() {
     return directus.request(readItems('directions'));
@@ -153,7 +152,11 @@ export default async function ProjectDetailPage({params}) {
                                 alt="Изображение из галереи"/>)}
                         </div>}
 
-                    {detail.video_2 && <VideoJS options={contentVideoConfig} />}
+                    {detail.video_2 && <video loop={true} muted={true} width={1360} height={0}
+                                     className="rounded-[16px] w-full h-full object-cover" controls={true} autoPlay={false}>
+                        <source src={getImageURL(detail.video_2 + '#t=0.001')}/>
+                        <source src={getImageURL(detail.video_2_mp4 + '#t=0.001')}/>
+                    </video>}
 
                     <Link href={detail.button_link || '/contacts'} className="block text-center w-full font-[500] bg-[rgba(10,_10,_10,_0.08)] duration-200 text-[rgba(10,_10,_10,_0.4)] hover:text-[rgba(10,_10,_10,_0.8)]
                        py-[30px] text-[20px] leading-[150%] rounded-[45px]
