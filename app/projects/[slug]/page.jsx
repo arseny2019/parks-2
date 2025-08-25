@@ -78,7 +78,7 @@ export default async function ProjectDetailPage({params}) {
         responsive: true,
         fluid: true,
         sources: [{
-            src: getImageURL(detail.video_2),
+            src: getImageURL(detail.video_2) + '#t=0.001',
             type: 'video/mp4'
         }]
     };
