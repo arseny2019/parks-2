@@ -71,10 +71,9 @@ export default async function ProjectDetailPage({params}) {
         notFound();
     }
     const menu = await getInformationMenu();
-    console.log('detail', detail);
 
     const contentVideoConfig = {
-        autoplay: true,
+        autoplay: false,
         controls: true,
         responsive: true,
         fluid: true,
@@ -83,8 +82,6 @@ export default async function ProjectDetailPage({params}) {
             type: 'video/mp4'
         }]
     };
-
-    console.log('contentVideoConfig', contentVideoConfig);
 
     return (
         <>
