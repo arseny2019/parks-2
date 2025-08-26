@@ -1,5 +1,5 @@
 import directus from "@/lib/directus";
-import {readItems} from "@directus/sdk";
+import {readFile, readItems} from "@directus/sdk";
 import Image from "next/image";
 import {getImageURL} from "@/helpers/directus";
 import Header from "@/components/header";
@@ -25,6 +25,10 @@ async function getContacts() {
 
 async function getInformationMenu() {
     return directus.request(readItems('informationMenu'));
+}
+
+async function fetchFileExtension(files_array) {
+    return Promise.all(files_array.map(file => directus.request(readFile(file.directus_files_id, {}))));
 }
 
 
@@ -70,17 +74,14 @@ export default async function ProjectDetailPage({params}) {
         notFound();
     }
     const menu = await getInformationMenu();
-
-    const contentVideoConfig = {
-        autoplay: false,
-        controls: true,
-        responsive: true,
-        fluid: true,
-        sources: [{
-            src: getImageURL(detail.video_2) + '#t=0.001',
-            type: 'video/mp4'
-        }]
-    };
+    const files = await fetchFileExtension(detail.gallery);
+    files.forEach(file => {
+        const galleryItem = detail.gallery.find(item => item.directus_files_id === file.id);
+        galleryItem.type = file.type;
+    })
+    await detail.gallery.map(galleryItem => ({
+        ...galleryItem, type: files.find(file => file.id === galleryItem.directus_files_id).type
+    }));
 
     return (
         <>
@@ -144,16 +145,28 @@ export default async function ProjectDetailPage({params}) {
 
                     {detail.gallery && detail.gallery.length > 0 &&
                         <div className="grid grid-cols-1 gap-y-8 md:gap-y-10">
-                            {detail.gallery.map(item => <Image
-                                quality={100}
-                                key={item.directus_files_id}
-                                className="w-full aspect-[2] rounded-3xl object-cover"
-                                width={900} height={0} src={getImageURL(item.directus_files_id)}
-                                alt="Изображение из галереи"/>)}
+                            {detail.gallery.map(item => {
+                                if (item.type.includes('image')) {
+                                    return <Image
+                                        quality={100}
+                                        key={item.directus_files_id}
+                                        className="w-full aspect-[2] rounded-3xl object-cover"
+                                        width={900} height={0} src={getImageURL(item.directus_files_id)}
+                                        alt="Изображение из галереи"/>
+                                } else if (item.type.includes('video')) {
+                                    return <video loop={true} muted={true} width={1360} height={0}
+                                                  key={item.directus_files_id}
+                                                  className="rounded-[16px] w-full h-full object-cover" controls={true}
+                                                  autoPlay={false}>
+                                        <source src={getImageURL(item.directus_files_id) + '#t=0.001'}/>
+                                    </video>
+                                }
+                            })}
                         </div>}
 
                     {detail.video_2 && <video loop={true} muted={true} width={1360} height={0}
-                                     className="rounded-[16px] w-full h-full object-cover" controls={true} autoPlay={false}>
+                                              className="rounded-[16px] w-full h-full object-cover" controls={true}
+                                              autoPlay={false}>
                         <source src={getImageURL(detail.video_2) + '#t=0.001'}/>
                         <source src={getImageURL(detail.video_2_mp4) + '#t=0.001'}/>
                     </video>}
