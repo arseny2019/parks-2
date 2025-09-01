@@ -1,18 +1,57 @@
 'use client';
 import {getImageURL} from "@/helpers/directus";
 import Image from "next/image";
-import {useRef} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import Link from "next/link";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
-const TechnologyModal = ({technology}) => {
+const TechnologyModal = ({technology, active, closeModalCallback}) => {
     const overlay = useRef(null);
     const modalRef = useRef(null);
+    const router = useRouter();
+    const pathname = usePathname();
+    const params = useSearchParams();
+
+    const patchUrlParam = useCallback((id) => {
+        if (id === null) {
+            router.push(`${pathname}`, {scroll: false});
+        } else {
+            router.push(`${pathname.slice(0, -1)}?tech=${id}`, {scroll: false});
+        }
+    }, [router, pathname]);
 
     const closeModal = () => {
         overlay?.current.classList.add('opacity-0', 'invisible');
         modalRef?.current.classList.add('translate-x-[100%]');
         document.body.classList.remove('menu-open');
+        patchUrlParam(null);
+        if (closeModalCallback) {
+            closeModalCallback();
+        }
     }
+
+    const openModal = () => {
+        modalRef?.current.classList.remove('translate-x-[100%]');
+        overlay?.current.classList.remove('invisible', 'opacity-0');
+        document.body.classList.add('menu-open');
+        setTimeout(() => {
+            patchUrlParam(technology.id);
+        }, 100);
+    }
+
+    useEffect(() => {
+        if (active) {
+            openModal();
+        } else {
+            closeModal();
+        }
+    }, [active]);
+
+    useEffect(() => {
+        if (`${params.get('tech')}` === `${technology.id}`) {
+            openModal();
+        }
+    }, []);
 
     return (
         <>

@@ -84,7 +84,7 @@ export default async function DevelopmentPage({params}) {
     const directions = await getDirections();
     const contacts = await getContacts();
     const detail = await getDevelopmentDetail();
-    console.log('detail', detail);
+
     if (!detail) {
         notFound();
     }
@@ -100,8 +100,6 @@ export default async function DevelopmentPage({params}) {
     }
 
     const menu = await getInformationMenu();
-
-    console.log('employees', employees);
 
 
     return (

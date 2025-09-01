@@ -10,7 +10,7 @@ const roboto = Roboto({
 });
 const inter = Inter({
     variable: "--font-inter",
-    weight: ['400', '500'],
+    weight: ['400', '500', '600'],
     subsets: ["latin", "cyrillic"],
 });
 

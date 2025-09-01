@@ -99,6 +99,10 @@ const RegionsDetail = ({detail}) => {
                         </Link>)}
                     </div>
                 </div>}
+                <Link href={detail.button_link || '/contacts'} className="block text-center w-full font-[500] bg-[rgba(10,_10,_10,_0.08)] duration-200 text-[rgba(10,_10,_10,_0.4)] hover:text-[rgba(10,_10,_10,_0.8)]
+                       py-[30px] text-[20px] leading-[150%] rounded-[45px]
+                       lg:py-[40px] lg:text-[22px] lg:rounded-[57px]
+                    ">{detail.button_text || 'Присоединиться'}</Link>
             </div>
         </>
     )

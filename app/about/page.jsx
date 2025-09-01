@@ -169,6 +169,10 @@ export default async function AboutPage({params}) {
                                 <div>
                                     <p className="font-medium text-[18px] xl:text-[22px] leading-[150%]">{employee.name}</p>
                                     <p className="font-medium text-placeholder-black text-[14px] leading-[150%] mt-2 xl:text-[16px]">{employee.post}</p>
+                                    {employee.link && <Link
+                                        className="rounded-[32px] inline-block bg-main-black text-white mt-4 px-5 py-[10px] text-[14px] leading-6 font-[500]
+                                        lg:text-[16px] lg:py-3"
+                                        target="_blank" href={employee.link}>Перейти на сайт</Link>}
                                 </div>
                             </div>)}
                         </div>
