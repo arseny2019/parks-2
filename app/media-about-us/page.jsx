@@ -65,7 +65,7 @@ export async function generateMetadata() {
 export default async function MediaAboutUsPage() {
     const directions = await getDirections();
     const contacts = await getContacts();
-    const limit = 3;
+    const limit = 9;
     const page = 0;
     const [aggregation] = await getMediaAboutUsCount();
     const menu = await getInformationMenu();
