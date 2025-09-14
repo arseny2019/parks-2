@@ -6,7 +6,7 @@ import {publicUserToken} from "@/helpers/directus";
 import {useEffect, useState} from "react";
 import Link from "next/link";
 
-export default function ContactForm() {
+export default function ContactForm({project_title, onClose}) {
     const [showSuccessWindow, setShowSuccessWindow] = useState(false);
     const [showErrorWindow, setShowErrorWindow] = useState(false);
 
@@ -27,15 +27,10 @@ export default function ContactForm() {
     const phonePattern = /^(\+7|8)\d{10}$/; // Simplified after normalization
 
     const onSubmit = async (e) => {
-        console.log('submit', e);
+        const body = {...e, project_title: project_title ? `Форма заполнена со страницы проекта ${project_title}` : ' ' };
         try {
             await directus.request(
-                createItem('user_data', {
-                    name: e.name,
-                    email: e.email,
-                    phone: e.phone,
-                    question: e.question
-                }, {access_token: publicUserToken})
+                createItem('user_data', body, {access_token: publicUserToken})
             );
             setShowSuccessWindow(true);
         } catch (error) {
@@ -51,8 +46,8 @@ export default function ContactForm() {
     }, [showSuccessWindow]);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="relative">
-            {showSuccessWindow && <div className="h-[calc(100%_+_24px)] px-6 py-8 absolute left-0 top-0 z-10 rounded-3xl bg-main-blue text-white
+        <form onSubmit={handleSubmit(onSubmit)} className="h-full max-h-[544px] relative">
+            {showSuccessWindow && <div className="h-full w-full px-6 py-8 absolute left-0 top-0 z-10 rounded-3xl bg-main-blue text-white
             md:pl-8 md:pr-16 md:py-10
             lg:py-12
             xl:py-10
@@ -65,7 +60,12 @@ export default function ContactForm() {
                 text-[16px] leading-[19px]
                 md:text-[18px] md:leading-[22px]
                 ">Спасибо за обращение! Мы свяжемся с вами в ближайшее время!</p>
-                <button onClick={() => setShowSuccessWindow(false)} className="font-[500] leading-[150%] bg-white text-main-black
+                <button onClick={() => {
+                    setShowSuccessWindow(false);
+                    if (onClose) {
+                        onClose();
+                    }
+                }} className="font-[500] leading-[150%] bg-white text-main-black
                 px-6 py-4 text-[16px] mt-8 rounded-[28px]
                 md:py-5 md:mt-10 md:rounded-[32px]
                 ">Отлично!
