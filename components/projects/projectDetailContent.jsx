@@ -65,7 +65,7 @@ export default function ProjectDetailContent({detail}) {
                                         {feature.description}
                                     </p>}
                                     {feature.link && <div><Link
-                                        className="font-roboto font-[600] text-main-green
+                                        className="font-roboto font-[600] text-main-blue
                                         text-[16px] leading-6
                                         md:text-[18px] md:leading-[27px] hover:opacity-80
                                     "
