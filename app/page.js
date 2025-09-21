@@ -14,27 +14,27 @@ import MainSecondBlock from "@/components/main-page/mainSecondBlock";
 import {getImageURL} from "@/helpers/directus";
 
 async function getDirections() {
-    return directus.request(readItems('directions'));
+    return directus.request(readItems('directions')).catch(() => []);
 }
 
 async function getProjects() {
-    return directus.request(readItems('projects', {limit: 3}));
+    return directus.request(readItems('projects', {limit: 3})).catch(() => []);
 }
 
 async function getNews() {
-    return directus.request(readItems('news', {limit: 3, sort: ['-date']}));
+    return directus.request(readItems('news', {limit: 3, sort: ['-date']})).catch(() => []);
 }
 
 async function getMainPageData() {
-    return directus.request(readItems('mainPage'));
+    return directus.request(readItems('mainPage')).catch(() => []);
 }
 
 async function getInformationMenu() {
-    return directus.request(readItems('informationMenu'));
+    return directus.request(readItems('informationMenu')).catch(() => []);
 }
 
 async function getContacts() {
-    return directus.request(readItems('contacts'));
+    return directus.request(readItems('contacts')).catch(() => []);
 }
 
 export async function generateMetadata() {

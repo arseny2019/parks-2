@@ -8,7 +8,7 @@ import ProjectTopBlock from "@/components/projects/projectTopBlock";
 import ProjectDetailContent from "@/components/projects/projectDetailContent";
 
 async function getDirections() {
-    return directus.request(readItems('directions'));
+    return directus.request(readItems('directions')).catch(() => []);
 }
 
 async function getProjectDetail(slug) {
@@ -19,11 +19,11 @@ async function getProjectDetail(slug) {
 }
 
 async function getContacts() {
-    return directus.request(readItems('contacts'));
+    return directus.request(readItems('contacts')).catch(() => []);
 }
 
 async function getInformationMenu() {
-    return directus.request(readItems('informationMenu'));
+    return directus.request(readItems('informationMenu')).catch(() => []);
 }
 
 async function fetchFileExtension(files_array) {

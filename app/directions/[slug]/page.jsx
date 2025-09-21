@@ -10,11 +10,11 @@ import {notFound} from "next/navigation";
 import DirectionTopBlock from "@/components/directions/directionTopBlock";
 
 async function getDirections() {
-    return directus.request(readItems('directions'));
+    return directus.request(readItems('directions')).catch(() => []);
 }
 
 async function getContacts() {
-    return directus.request(readItems('contacts'));
+    return directus.request(readItems('contacts')).catch(() => []);
 }
 
 async function getDirectionDetail(slug) {
@@ -37,7 +37,7 @@ async function getTechnologies(ids) {
 }
 
 async function getInformationMenu() {
-    return directus.request(readItems('informationMenu'));
+    return directus.request(readItems('informationMenu')).catch(() => []);
 }
 
 export async function generateMetadata({params, searchParams}, parent) {

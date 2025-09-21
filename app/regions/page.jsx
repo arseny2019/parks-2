@@ -7,7 +7,7 @@ import RegionsComponent from "@/components/regions/regionsComponent";
 import {getImageURL} from "@/helpers/directus";
 
 async function getDirections() {
-    return directus.request(readItems('directions'));
+    return directus.request(readItems('directions')).catch(() => []);
 }
 
 async function getRegions() {
@@ -27,14 +27,14 @@ async function getPartnerCategories() {
 }
 
 async function getContacts() {
-    return directus.request(readItems('contacts'));
+    return directus.request(readItems('contacts')).catch(() => []);
 }
 
 async function getInformationMenu() {
-    return directus.request(readItems('informationMenu'));
+    return directus.request(readItems('informationMenu')).catch(() => []);
 }
 async function getArchivePageData() {
-    return directus.request(readItems('regionArchivePage'));
+    return directus.request(readItems('regionArchivePage')).catch(() => []);
 }
 
 export async function generateMetadata() {

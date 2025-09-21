@@ -10,7 +10,7 @@ import {useEffect, useState} from "react";
 async function getNews(page, limit) {
     return directus.request(readItems('news', {
         limit, offset: page * limit, meta: 'total_count',  sort: ['-date']
-    }));
+    })).catch(() => []);
 }
 
 const NewsArchiveGrid = ({page, limit, news, totalCount}) => {

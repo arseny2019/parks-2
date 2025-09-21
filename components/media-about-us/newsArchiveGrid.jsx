@@ -10,7 +10,7 @@ import {useEffect, useState} from "react";
 async function getMediaAboutUs(page, limit) {
     return directus.request(readItems('mediaAboutUs', {
         limit, offset: page * limit, meta: 'total_count',  sort: ['-date']
-    }));
+    })).catch(() => []);
 }
 
 const MediaAboutUsArchiveGrid = ({page, limit, news, totalCount}) => {

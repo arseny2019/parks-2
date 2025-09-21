@@ -22,15 +22,15 @@ async function getNewsCount() {
 }
 
 async function getDirections() {
-    return directus.request(readItems('directions'));
+    return directus.request(readItems('directions')).catch(() => []);
 }
 
 async function getContacts() {
-    return directus.request(readItems('contacts'));
+    return directus.request(readItems('contacts')).catch(() => []);
 }
 
 async function getInformationMenu() {
-    return directus.request(readItems('informationMenu'));
+    return directus.request(readItems('informationMenu')).catch(() => []);
 }
 
 export async function generateMetadata() {
