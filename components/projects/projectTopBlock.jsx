@@ -2,7 +2,7 @@
 import Image from "next/image";
 import {getImageURL} from "@/helpers/directus";
 import {useEffect, useRef, useState, useContext} from "react";
-import { ModalContext } from "@/contexts/ModalProvider";
+import { ModalContext } from "@/components/contexts/ModalProvider";
 
 export default function ProjectTopBlock({detail}) {
     const {openModal} = useContext(ModalContext);

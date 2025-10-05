@@ -6,7 +6,7 @@ import Footer from "@/components/footer";
 import {notFound} from "next/navigation";
 import ProjectTopBlock from "@/components/projects/projectTopBlock";
 import ProjectDetailContent from "@/components/projects/projectDetailContent";
-import { ModalProvider } from "@/contexts/ModalProvider";
+import { ModalProvider } from "@/components/contexts/ModalProvider";
 
 async function getDirections() {
     return directus.request(readItems('directions')).catch(() => []);
