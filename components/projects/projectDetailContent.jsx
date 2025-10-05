@@ -4,17 +4,11 @@ import Image from "next/image";
 import {getImageURL} from "@/helpers/directus";
 import Link from "next/link";
 import ContactModal from "@/components/contactModal";
+import { useContext } from "react";
+import { ModalContext } from "@/contexts/ModalProvider";
 
 export default function ProjectDetailContent({detail}) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const {isOpen, openModal, closeModal} = useContext(ModalContext);
 
     return (
         <>
@@ -117,7 +111,7 @@ export default function ProjectDetailContent({detail}) {
                     ">Связаться с нами</button>
                 </div>
             </div>
-            <ContactModal project_title={detail.detailTitle} active={isModalOpen} closeModalCallback={closeModal} />
+            <ContactModal project_title={detail.detailTitle} active={isOpen} closeModalCallback={closeModal} />
         </>
     );
 }

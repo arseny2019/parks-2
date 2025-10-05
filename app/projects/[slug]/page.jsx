@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import {notFound} from "next/navigation";
 import ProjectTopBlock from "@/components/projects/projectTopBlock";
 import ProjectDetailContent from "@/components/projects/projectDetailContent";
+import { ModalProvider } from "@/contexts/ModalProvider";
 
 async function getDirections() {
     return directus.request(readItems('directions')).catch(() => []);
@@ -83,13 +84,13 @@ export default async function ProjectDetailPage({params}) {
     }));
 
     return (
-        <>
+        <ModalProvider>
             <Header contacts={contacts} directions={directions} withAnimation={true} menu={menu}></Header>
             <ProjectTopBlock detail={detail}/>
             <ProjectDetailContent detail={detail}/>
             <div id="blackWrapper">
                 <Footer contacts={contacts} directions={directions} menu={menu}></Footer>
             </div>
-        </>
+        </ModalProvider>
     )
 }

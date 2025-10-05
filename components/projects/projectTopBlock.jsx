@@ -1,9 +1,11 @@
 'use client';
 import Image from "next/image";
 import {getImageURL} from "@/helpers/directus";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState, useContext} from "react";
+import { ModalContext } from "@/contexts/ModalProvider";
 
 export default function ProjectTopBlock({detail}) {
+    const {openModal} = useContext(ModalContext);
     const videoRef = useRef(null);
     const [video, setVideo] = useState(null);
     const [videoMP4, setVideoMP4] = useState(null);
@@ -42,6 +44,9 @@ export default function ProjectTopBlock({detail}) {
                                 xl:text-[40px] xl:leading-[44px]
                                 2xl:text-[50px] 2xl:leading-[55px]
                             ">{detail.subtitle}</h4>
+                            <button onClick={openModal} className="mt-6 md:mt-8 py-3 px-5 md:py-4 md:px-6 inline-block text-center font-[500] bg-main-black text-white hover:text-[rgba(255,_255,_255,_0.8)] duration-200
+                            text-[14px] md:text-[16px] leading-[24px] rounded-[32px]
+                    ">{detail.buttonText ? detail.buttonText : 'Связаться с нами'}</button>
                         </div>
                     </div>
                 </div>
