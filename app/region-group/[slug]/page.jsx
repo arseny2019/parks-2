@@ -62,7 +62,7 @@ export async function generateMetadata({params, searchParams}, parent) {
     }
 }
 
-const RegionsDetailPage = async ({params}) => {
+const RegionGroupDetailPage = async ({params}) => {
     const pars = await params;
     const directions = await getDirections();
     const contacts = await getContacts();
@@ -85,4 +85,4 @@ const RegionsDetailPage = async ({params}) => {
     )
 }
 
-export default RegionsDetailPage;
+export default RegionGroupDetailPage;
