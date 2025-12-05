@@ -83,9 +83,9 @@ export default function RegionsComponent({archivePageData, regionGroups, regions
                 sm:grid-cols-2
                 md:grid-cols-3
                 ">{filteredData.map(group => group.regions && group.regions.length > 0 && <div key={group.name}>
-                        <p className="text-[14px] leading-[150%] text-placeholder-black font-[600] uppercase
+                        <Link href={`/region-group/${group.regionGroupSlug || ''}`} className="text-[14px] leading-[150%] hover:opacity-80 duration-200 cursor-pointer font-[600] uppercase
                     sm:text-[16px]
-                    ">{group.name}</p>
+                    ">{group.name}</Link>
                         {group.regions.map(region => <div key={region.regionSlug} className="mt-4 text-[16px] leading-[150%]
                     md:text-[18px]
                     ">

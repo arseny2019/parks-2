@@ -23,14 +23,14 @@ const RegionsDetail = ({detail}) => {
                         md:text-[50px]
                         lg:text-[60px]
                         xl:text-[70px]
-                    ">{detail.regionName}</h2>
-                <p className="font-roboto-condensed font-[600] text-placeholder-black
+                    ">{detail.regionName || detail.name}</h2>
+                {detail.regionName && <p className="font-roboto-condensed font-[600] text-placeholder-black
                         mt-4 text-[20px] leading-[110%]
                         md:text-[24px]
                         lg:mt-5 lg:text-[32px]
                         xl:text-[40px]
                         2xl:text-[45px]
-                    ">{detail.subtitle || 'Региональное отделение'}</p>
+                    ">{detail.subtitle || 'Региональное отделение'}</p>}
             </div>
             <div className="grid
                 py-[100px] gap-y-[100px]

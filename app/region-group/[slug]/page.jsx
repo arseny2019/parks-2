@@ -2,7 +2,6 @@ import directus from "@/lib/directus";
 import {readItems} from "@directus/sdk";
 import BlackHeader from "@/components/blackHeader";
 import Footer from "@/components/footer";
-import NewsDetail from "@/components/news/newsDetail";
 import {notFound} from "next/navigation";
 import {getImageURL} from "@/helpers/directus";
 import RegionsDetail from "@/components/regions/regionsDetail";
@@ -15,10 +14,10 @@ async function getContacts() {
     return directus.request(readItems('contacts')).catch(() => []);
 }
 
-async function getRegionDetail(slug) {
-    console.log('slug', slug);
-    return directus.request(readItems('regions', {
-        filter: {regionSlug: decodeURIComponent(slug)},
+async function getRegionGroupDetail(slug) {
+    console.log('slug', decodeURIComponent(slug));
+    return directus.request(readItems('regionGroup', {
+        filter: {regionGroupSlug: decodeURIComponent(slug)},
         fields: ['*', 'projects.*', 'employees.*']
     })).catch((e) => {
         console.log(e);
@@ -33,8 +32,8 @@ async function getInformationMenu() {
 export async function generateMetadata({params, searchParams}, parent) {
     const slug = (await params).slug
 
-    const [item] = await directus.request(readItems('regions', {
-        filter: {regionSlug: decodeURIComponent(slug)},
+    const [item] = await directus.request(readItems('regionGroup', {
+        filter: {regionGroupSlug: decodeURIComponent(slug)},
         fields: ['*']
     })).catch(() => notFound());
 
@@ -67,8 +66,7 @@ const RegionsDetailPage = async ({params}) => {
     const pars = await params;
     const directions = await getDirections();
     const contacts = await getContacts();
-    const [detail] = await getRegionDetail(pars.slug);
-    console.log('detail', detail);
+    const [detail] = await getRegionGroupDetail(pars.slug);
     if (!detail) {
         notFound();
     }
