@@ -107,7 +107,7 @@ export default async function PartnersPage() {
                         ">
                                 {partnersMap[category.name].map(partner => (
                                     <div key={partner.title + 'government'}>
-                                        {!partner.link && <div className="bg-main-gray py-4 rounded-[16px] md:rounded-3xl md:p-4">
+                                        {!partner.link && <div className="border border-main-gray py-4 rounded-[16px] md:rounded-3xl md:p-4">
                                             <Image
                                                 quality={100}
                                                 className="object-contain aspect-[1.8] w-full"
@@ -115,7 +115,7 @@ export default async function PartnersPage() {
                                                 alt={partner.title}></Image>
                                         </div>}
                                         {partner.link && <Link href={partner.link || ''} target="_blank"
-                                                               className="block bg-main-gray duration-200 hover:bg-secondary-gray py-4 rounded-[16px] md:rounded-3xl md:p-4">
+                                                               className="block border border-main-gray duration-200 hover:border-secondary-gray py-4 rounded-[16px] md:rounded-3xl md:p-4">
                                             <Image
                                                 quality={100}
                                                 className="object-contain aspect-[1.8] w-full"
