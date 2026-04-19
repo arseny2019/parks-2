@@ -23,7 +23,7 @@
     @apply text-main-blue duration-200 hover:text-secondary-green;
 }
 
-.news-content h2 {
+.news-content h2, .news-content h2 * {
     @apply font-medium text-[20px] md:text-[22px] leading-[150%] font-roboto;
 }
 
