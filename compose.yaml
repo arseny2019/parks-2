@@ -1,0 +1,101 @@
+name: parks
+
+services:
+  database:
+    image: ${POSTGRES_IMAGE:?Set POSTGRES_IMAGE in .env}
+    container_name: database
+    restart: unless-stopped
+    ports:
+      # Kept unchanged for the first migration. Bind to localhost or remove it
+      # after the unified stack has been verified.
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  directus:
+    image: ${DIRECTUS_IMAGE:?Set DIRECTUS_IMAGE in .env}
+    container_name: directus
+    restart: unless-stopped
+    ports:
+      - "8055:8055"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      KEY: ${DIRECTUS_KEY:?Set DIRECTUS_KEY in .env}
+      SECRET: ${DIRECTUS_SECRET:?Set DIRECTUS_SECRET in .env}
+      DB_CLIENT: postgres
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_DATABASE: ${POSTGRES_DB:?Set POSTGRES_DB in .env}
+      DB_USER: ${POSTGRES_USER:?Set POSTGRES_USER in .env}
+      DB_PASSWORD: ${DIRECTUS_DB_PASSWORD:?Set DIRECTUS_DB_PASSWORD in .env}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:?Set DIRECTUS_ADMIN_EMAIL in .env}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:?Set DIRECTUS_ADMIN_PASSWORD in .env}
+      EMAIL_VERIFY_SETUP: "true"
+      EMAIL_FROM: ${SMTP_FROM:?Set SMTP_FROM in .env}
+      EMAIL_TRANSPORT: smtp
+      EMAIL_TEMPLATES_PATH: ./templates
+      EMAIL_SMTP_HOST: ${SMTP_HOST:?Set SMTP_HOST in .env}
+      EMAIL_SMTP_PORT: ${SMTP_PORT:-587}
+      EMAIL_SMTP_USER: ${SMTP_USER:?Set SMTP_USER in .env}
+      EMAIL_SMTP_PASSWORD: ${SMTP_PASSWORD:?Set SMTP_PASSWORD in .env}
+      EMAIL_SMTP_SECURE: ${SMTP_SECURE:-false}
+    volumes:
+      - directus_uploads:/directus/uploads
+
+  parks-front:
+    image: ${FRONT_IMAGE:-parks-front:compose}
+    container_name: parks-front
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3020:3000"
+    depends_on:
+      directus:
+        condition: service_started
+
+  pgadmin:
+    image: ${PGADMIN_IMAGE:?Set PGADMIN_IMAGE in .env}
+    container_name: pgadmin
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:?Set PGADMIN_DEFAULT_EMAIL in .env}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?Set PGADMIN_DEFAULT_PASSWORD in .env}
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+    external: true
+    name: ${POSTGRES_VOLUME_NAME:?Set POSTGRES_VOLUME_NAME in .env}
+  directus_uploads:
+    external: true
+    name: ${DIRECTUS_UPLOADS_VOLUME_NAME:?Set DIRECTUS_UPLOADS_VOLUME_NAME in .env}
+  pgadmin_data:
+    external: true
+    name: ${PGADMIN_VOLUME_NAME:?Set PGADMIN_VOLUME_NAME in .env}
+
+networks:
+  default:
+    external: true
+    name: ${DOCKER_NETWORK_NAME:-my-app-network}

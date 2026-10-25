@@ -1,0 +1,23 @@
+# Send only files used by the current Dockerfile to the build context.
+*
+!Dockerfile
+!package.json
+!package-lock.json
+!app/
+!app/**
+!components/
+!components/**
+!helpers/
+!helpers/**
+!hooks/
+!hooks/**
+!lib/
+!lib/**
+!public/
+!public/**
+!styles/
+!styles/**
+!next.config.mjs
+!tailwind.config.mjs
+!postcss.config.mjs
+!jsconfig.json
